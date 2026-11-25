@@ -1,0 +1,3286 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="sticker">
+  <title>Інформатичний калейдоскоп — Тренажер для 3 класу</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Sticker style) */
+      --background: #fef7ff;
+      --surface-container-low: #ffffff;
+      --surface-container: #f8eef8;
+      --surface-container-high: #f2e8f2;
+
+      /* Ink */
+      --on-surface: #2e1a28;
+      --on-surface-variant: #604868;
+
+      /* Rules */
+      --outline: #907898;
+      --outline-variant: #dcc8e0;
+
+      /* Accents */
+      --primary: #c2207f;
+      --on-primary: #ffffff;
+      --primary-container: #f080c0;
+      --primary-soft: #fde8f4;
+      --on-primary-container: #2e1a28;
+      --secondary: #7c52aa;
+      --on-secondary: #ffffff;
+      --secondary-soft: #f0e8fa;
+      --tertiary: #0096cc;
+      --tertiary-soft: #e0f4fc;
+      --error: #c53030;
+      --on-error: #ffffff;
+      --error-soft: #fee2e2;
+
+      /* Semantic */
+      --positive: #15803d;
+      --on-positive: #ffffff;
+      --positive-soft: #dcfce7;
+      --warning: #b45309;
+      --warning-soft: #fef3c7;
+
+      /* Data series */
+      --data-1: #c2207f;
+      --data-2: #7c52aa;
+      --data-3: #0096cc;
+      --data-4: #d96a00;
+      --data-context: #c8b8d0;
+
+      /* Fonts */
+      --font-headline: 'Nunito', 'DM Sans', sans-serif;
+      --font-body: 'Nunito', 'DM Sans', sans-serif;
+      --font-label: 'Nunito', 'DM Sans', sans-serif;
+
+      /* Shape */
+      --rounded: 1rem;
+      --rounded-lg: 2rem;
+      --rounded-full: 9999px;
+
+      /* Effects */
+      --shadow-pink: 0 4px 16px rgb(224 64 160 / 0.2);
+      --shadow-pink-deep: 0 10px 28px rgb(224 64 160 / 0.32);
+      --shadow-grape: 0 4px 16px rgb(124 82 170 / 0.2);
+      --shadow-grape-deep: 0 10px 28px rgb(124 82 170 / 0.32);
+      --shadow-sky: 0 4px 16px rgb(0 150 204 / 0.2);
+      --shadow-sky-deep: 0 10px 28px rgb(0 150 204 / 0.3);
+      --pop-scale: scale(1.03);
+      --lift: translateY(-4px);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+      /* Focus */
+      --focus: var(--primary);
+
+      /* Type scale */
+      --display-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+      --headline-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.75rem);
+      --subhead-size: clamp(1.125rem, 1rem + 0.4vw, 1.3125rem);
+      --body-size: clamp(1rem, 0.96rem + 0.15vw, 1.0625rem);
+      --label-size: 0.78rem;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1180px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Typography helpers */
+    .kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-xs) 0;
+    }
+
+    .display {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: var(--display-size);
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-sm) 0;
+    }
+    .display em {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    h2.section-title {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: var(--headline-size);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-sm) 0;
+    }
+    h2.section-title em {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    h3.card-title {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: var(--subhead-size);
+      line-height: 1.25;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-sm) 0;
+    }
+
+    p { margin: 0 0 var(--space-sm) 0; max-width: 65ch; }
+    p:last-child { margin-bottom: 0; }
+
+    /* Sticker Cards & Panels */
+    .hero-panel {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-pink);
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      align-items: center;
+    }
+
+    .hero-stats-box {
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .stat-big {
+      font-weight: 900;
+      font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+      font-variant-numeric: tabular-nums;
+      color: var(--primary);
+      line-height: 1.05;
+    }
+
+    .card {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded);
+      box-shadow: var(--shadow-pink);
+      padding: var(--space-lg);
+      animation: cardEnter var(--dur-long) var(--ease-bounce) both;
+    }
+    .card:nth-child(3n+2) { box-shadow: var(--shadow-sky); }
+    .card:nth-child(3n+3) { box-shadow: var(--shadow-grape); }
+
+    .card-accent-sky { box-shadow: var(--shadow-sky); }
+    .card-accent-grape { box-shadow: var(--shadow-grape); }
+    .card-accent-pink { box-shadow: var(--shadow-pink); }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .asymmetric-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    /* Progress & Medals Strip */
+    .tracker-panel {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded);
+      box-shadow: var(--shadow-sky);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .progress-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 16px;
+      background: var(--surface-container-high);
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--tertiary);
+      border-radius: var(--rounded-full);
+      transition: width var(--dur-long) var(--ease-bounce);
+    }
+
+    .medals-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .medal-pill {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-full);
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+      border: 2px solid transparent;
+      cursor: pointer;
+      min-height: 44px;
+      text-align: left;
+      transition: transform var(--dur-short) var(--ease-bounce), background-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+    .medal-pill:hover {
+      transform: var(--pop-scale);
+      background: var(--surface-container-high);
+    }
+    .medal-pill.earned {
+      background: var(--primary-soft);
+      color: var(--on-surface);
+      box-shadow: var(--shadow-pink);
+    }
+    .medal-pill.earned-gold {
+      background: var(--warning-soft);
+      color: var(--on-surface);
+      box-shadow: var(--shadow-sky);
+    }
+    .medal-icon-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--rounded-full);
+      background: var(--outline-variant);
+      color: var(--on-surface-variant);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 900;
+      font-size: 0.85rem;
+    }
+    .medal-pill.earned .medal-icon-dot {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .medal-pill.earned-gold .medal-icon-dot {
+      background: var(--secondary);
+      color: var(--on-secondary);
+    }
+    .medal-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+    .medal-name {
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+    .medal-pts {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--on-surface-variant);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Station Tabs */
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      background: var(--surface-container-high);
+      border-radius: var(--rounded-lg);
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border: none;
+      border-radius: var(--rounded-full);
+      background: transparent;
+      color: var(--on-surface);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform var(--dur-short) var(--ease-bounce), background-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+    }
+    .tab-btn:hover {
+      transform: var(--pop-scale);
+      background: var(--surface-container-low);
+    }
+    .tab-btn[aria-selected="true"] {
+      background: var(--primary);
+      color: var(--on-primary);
+      box-shadow: var(--shadow-pink);
+    }
+    .tab-btn.tab-diploma[aria-selected="true"] {
+      background: var(--secondary);
+      color: var(--on-secondary);
+      box-shadow: var(--shadow-grape);
+    }
+    .tab-badge {
+      padding: 2px 8px;
+      border-radius: var(--rounded-full);
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+    .tab-btn[aria-selected="true"] .tab-badge {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--rounded-full);
+      border: 2px solid transparent;
+      font-weight: 700;
+      font-size: var(--body-size);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--dur-short) var(--ease-bounce), box-shadow var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .btn:hover:not(:disabled) { transform: var(--pop-scale); }
+    .btn:active:not(:disabled) { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      box-shadow: var(--shadow-pink);
+    }
+    .btn-primary:hover:not(:disabled) { box-shadow: var(--shadow-pink-deep); }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: var(--on-secondary);
+      box-shadow: var(--shadow-grape);
+    }
+    .btn-secondary:hover:not(:disabled) { box-shadow: var(--shadow-grape-deep); }
+
+    .btn-soft {
+      background: var(--surface-container);
+      color: var(--on-surface);
+      border-color: var(--outline-variant);
+    }
+    .btn-soft:hover:not(:disabled) {
+      background: var(--surface-container-high);
+      box-shadow: var(--shadow-sky);
+    }
+
+    .btn-quiet {
+      background: transparent;
+      color: var(--primary);
+      padding: var(--space-sm) var(--space-md);
+    }
+    .btn-quiet:hover:not(:disabled) {
+      background: var(--primary-soft);
+    }
+
+    .btn-positive {
+      background: var(--positive);
+      color: var(--on-positive);
+      box-shadow: var(--shadow-sky);
+    }
+    .btn-danger {
+      background: var(--error);
+      color: var(--on-error);
+      box-shadow: var(--shadow-pink);
+    }
+
+    /* Badges & Tags */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 4px 12px;
+      border-radius: var(--rounded-full);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 4px 12px;
+      border-radius: var(--rounded-full);
+      border: 2px solid var(--secondary);
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .pill-info {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 4px 12px;
+      border-radius: var(--rounded-full);
+      background: var(--tertiary-soft);
+      color: var(--on-surface);
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    /* Inputs & Forms */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--on-surface-variant);
+    }
+    .input-pill {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-full);
+      background: var(--surface-container);
+      border: 2px solid var(--outline);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 600;
+      width: 100%;
+      transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+    .input-pill:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      align-items: end;
+    }
+
+    /* Station Sections */
+    .station-panel {
+      display: none;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+    .station-panel.active {
+      display: flex;
+      animation: panelFade var(--dur-short) var(--ease-out) both;
+    }
+
+    .station-banner {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-grape);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-lg);
+    }
+
+    /* Lists inside Theory Cards */
+    .rule-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+    }
+    .rule-num {
+      width: 26px;
+      height: 26px;
+      border-radius: var(--rounded-full);
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .rule-num-grape { background: var(--secondary); color: var(--on-secondary); }
+
+    /* Interactive Trainers */
+    .trainer-box {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-pink-deep);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .trainer-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .feedback-box {
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 52px;
+    }
+    .feedback-neutral {
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+    }
+    .feedback-ok {
+      background: var(--positive-soft);
+      color: var(--positive);
+      animation: popBounce var(--dur-short) var(--ease-bounce);
+    }
+    .feedback-err {
+      background: var(--error-soft);
+      color: var(--error);
+      animation: popShake var(--dur-short) var(--ease-out);
+    }
+
+    /* Station 1: Power on simulator & Eye timer */
+    .step-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+    .pc-screen-sim {
+      margin-top: var(--space-md);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      background: var(--on-surface);
+      color: var(--on-primary);
+      text-align: center;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-short) var(--ease-out);
+    }
+    .pc-screen-sim.ready {
+      background: var(--tertiary-soft);
+      color: var(--on-surface);
+      box-shadow: var(--shadow-sky);
+    }
+
+    .eye-timer-display {
+      background: var(--secondary-soft);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      text-align: center;
+      margin-top: var(--space-sm);
+    }
+    .eye-counter {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Station 1 Sorting Game */
+    .situation-card {
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .situation-text {
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--on-surface);
+      max-width: 48ch;
+    }
+    .sort-btn-pair {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-md);
+    }
+    .sorted-log {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .log-col {
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+    .log-list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-sm) 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      font-size: 0.9rem;
+    }
+    .log-item {
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      font-weight: 600;
+    }
+
+    /* Station 2: Code lab (Morse, Flags, Braille) */
+    .code-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+    .chip {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded-full);
+      border: 2px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: transform var(--dur-short) var(--ease-bounce), background-color var(--dur-short) var(--ease-out);
+    }
+    .chip:hover {
+      transform: var(--pop-scale);
+      background: var(--primary-soft);
+      border-color: var(--primary);
+    }
+    .chip.selected {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .braille-cell {
+      display: inline-grid;
+      grid-template-columns: repeat(2, 12px);
+      gap: 5px;
+      padding: 8px;
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      vertical-align: middle;
+    }
+    .braille-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: var(--rounded-full);
+      background: var(--outline-variant);
+    }
+    .braille-dot.on {
+      background: var(--primary);
+    }
+
+    .decode-card {
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    /* Station 3: Hardware sorter & Keyboard trainer */
+    .device-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .device-btn {
+      min-height: 54px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 2px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      transition: transform var(--dur-short) var(--ease-bounce), border-color var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .device-btn:hover:not(:disabled) {
+      transform: var(--pop-scale);
+      border-color: var(--secondary);
+    }
+    .device-btn.active-pick {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-pink);
+    }
+    .device-btn.done-ok {
+      background: var(--positive-soft);
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+
+    .bucket-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .bucket-btn {
+      padding: var(--space-lg) var(--space-md);
+      border-radius: var(--rounded);
+      border: 2px dashed var(--outline);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 110px;
+      transition: transform var(--dur-short) var(--ease-bounce), background-color var(--dur-short) var(--ease-out);
+    }
+    .bucket-btn:hover {
+      transform: var(--lift);
+      background: var(--tertiary-soft);
+      border-color: var(--tertiary);
+    }
+
+    /* Interactive Keyboard */
+    .kbd-wrap {
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      overflow-x: auto;
+    }
+    .kbd-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+      justify-content: center;
+      min-width: 540px;
+    }
+    .kbd-row:last-child { margin-bottom: 0; }
+    .key-cap {
+      min-width: 38px;
+      height: 44px;
+      padding: 0 8px;
+      border-radius: 10px;
+      border: 2px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform var(--dur-micro) var(--ease-bounce), background-color var(--dur-micro) var(--ease-out);
+    }
+    .key-cap:hover { transform: scale(1.06); }
+    .key-cap.home-left { background: var(--primary-soft); border-color: var(--primary); }
+    .key-cap.home-right { background: var(--secondary-soft); border-color: var(--secondary); }
+    .key-cap.key-special { background: var(--tertiary-soft); }
+    .key-cap.key-space { min-width: 210px; background: var(--surface-container-high); }
+    .key-cap.key-wide { min-width: 74px; }
+    .key-cap.key-hit { background: var(--primary); color: var(--on-primary); }
+
+    /* Station 4: Folder tree & matching */
+    .folder-tree {
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .tree-node {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded-full);
+      background: var(--surface-container-low);
+      border: none;
+      color: var(--on-surface);
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+    }
+    .tree-node:hover { background: var(--primary-soft); }
+    .tree-children {
+      padding-left: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .tree-children.hidden { display: none; }
+
+    .match-columns {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+    .match-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .match-btn {
+      min-height: 50px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 2px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      transition: transform var(--dur-short) var(--ease-bounce), border-color var(--dur-short) var(--ease-out);
+    }
+    .match-btn:hover:not(:disabled) { transform: var(--pop-scale); border-color: var(--primary); }
+    .match-btn.active-left { background: var(--primary-soft); border-color: var(--primary); }
+    .match-btn.matched { background: var(--positive-soft); border-color: var(--positive); color: var(--positive); }
+
+    /* Station 5: Interactive browser mockup & quiz */
+    .browser-mock {
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .browser-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+      background: var(--surface-container-low);
+      padding: var(--space-sm);
+      border-radius: var(--rounded-full);
+    }
+    .browser-part-btn {
+      min-height: 44px;
+      padding: 6px 14px;
+      border-radius: var(--rounded-full);
+      border: 2px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .browser-part-btn:hover, .browser-part-btn.active {
+      background: var(--secondary);
+      color: var(--on-secondary);
+      border-color: var(--secondary);
+    }
+    .browser-body {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+    .hyperlink-demo {
+      display: inline-block;
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 0;
+      font-size: inherit;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-sm);
+    }
+    .quiz-opt-btn {
+      min-height: 48px;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--rounded-full);
+      border: 2px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 700;
+      font-size: var(--body-size);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transition: transform var(--dur-short) var(--ease-bounce), background-color var(--dur-short) var(--ease-out);
+    }
+    .quiz-opt-btn:hover:not(:disabled) {
+      transform: var(--pop-scale);
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+    .quiz-opt-btn.opt-correct {
+      background: var(--positive-soft);
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+    .quiz-opt-btn.opt-wrong {
+      background: var(--error-soft);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    /* Diploma Certificate */
+    .diploma-frame {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-pink-deep);
+      border: 6px solid var(--primary-container);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .diploma-inner-border {
+      width: 100%;
+      border: 3px dashed var(--secondary);
+      border-radius: var(--rounded);
+      padding: var(--space-xl) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .diploma-student {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary-container);
+      padding: 0 var(--space-lg) var(--space-xs) var(--space-lg);
+    }
+    .diploma-medals-showcase {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-md);
+      margin: var(--space-sm) 0;
+    }
+    .diploma-medal-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      min-width: 110px;
+    }
+    .diploma-medal-item.unlocked {
+      background: var(--primary-soft);
+      box-shadow: var(--shadow-pink);
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: left;
+      padding: var(--space-lg);
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      color: var(--on-surface-variant);
+      font-size: 0.9rem;
+    }
+
+    .station-nav-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    /* Keyframes */
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes panelFade {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popBounce {
+      0% { transform: scale(0.95); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+    @keyframes popShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .hero-panel { grid-template-columns: 1fr; }
+      .asymmetric-grid { grid-template-columns: 1fr; }
+      .medals-row { grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid { padding: var(--space-sm); gap: var(--space-md); }
+      .hero-panel, .trainer-box, .station-banner, .diploma-frame { padding: var(--space-lg) var(--space-md); }
+      .bucket-grid { grid-template-columns: 1fr; }
+      .match-columns { grid-template-columns: 1fr; }
+      .tabs-bar { border-radius: var(--rounded); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: var(--surface-container-low); }
+      .station-panel { display: none !important; }
+      #panel-diploma { display: flex !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+    <!-- HERO -->
+    <header class="hero-panel no-print">
+      <div>
+        <p class="kicker">3 клас • Підсумковий урок за І семестр • с. 4–46</p>
+        <h1 class="display">Інформатичний <em>калейдоскоп</em></h1>
+        <p>Пройди 5 тематичних станцій, пригадай правила та секрети інформатики за підручником М. Корнієнко, С. Крамаровської, І. Зарецької, збери 5 віртуальних медалей та отримай власний диплом знавця!</p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-soft" id="sound-toggle-btn" onclick="toggleSound()">
+            <i data-lucide="volume-2" aria-hidden="true"></i>
+            <span id="sound-toggle-label">Звук увімкнено</span>
+          </button>
+          <button type="button" class="btn btn-quiet" id="reset-all-btn" onclick="handleResetProgress(this)">
+            <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+            <span>Почати спочатку</span>
+          </button>
+        </div>
+      </div>
+      <div class="hero-stats-box">
+        <div class="stat-row">
+          <div>
+            <div class="kicker">Твій результат</div>
+            <div class="stat-big" id="hero-total-score">0 / 50 балів</div>
+          </div>
+          <span class="badge" id="hero-medals-count">0 / 5 медалей</span>
+        </div>
+        <div class="form-row">
+          <div class="field-group" style="flex: 1 1 200px;">
+            <label class="field-label" for="student-name-input">Ім'я мандрівника / мандрівниці (для диплома)</label>
+            <input type="text" id="student-name-input" class="input-pill" maxlength="40" value="" oninput="updateStudentName(this.value)">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- PROGRESS & MEDALS TRACKER -->
+    <section class="tracker-panel no-print" aria-label="Прогрес і віртуальні медалі">
+      <div class="progress-header">
+        <div>
+          <span class="kicker">Шлях до диплома</span>
+          <strong id="progress-status-text">Обери станцію нижче та виконуй інтерактивні завдання!</strong>
+        </div>
+        <span class="pill-info" id="progress-percent-pill">0% пройдено</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="50" aria-valuenow="0" id="main-progress-bar">
+        <div class="progress-fill" id="main-progress-fill"></div>
+      </div>
+      <div class="medals-row" id="medals-strip">
+        <button type="button" class="medal-pill" id="medal-pill-1" onclick="switchTab(1)">
+          <span class="medal-icon-dot" id="medal-dot-1">1</span>
+          <span class="medal-meta">
+            <span class="medal-name">Медаль Безпеки</span>
+            <span class="medal-pts" id="medal-pts-1">0 / 10</span>
+          </span>
+        </button>
+        <button type="button" class="medal-pill" id="medal-pill-2" onclick="switchTab(2)">
+          <span class="medal-icon-dot" id="medal-dot-2">2</span>
+          <span class="medal-meta">
+            <span class="medal-name">Майстер шифрів</span>
+            <span class="medal-pts" id="medal-pts-2">0 / 10</span>
+          </span>
+        </button>
+        <button type="button" class="medal-pill" id="medal-pill-3" onclick="switchTab(3)">
+          <span class="medal-icon-dot" id="medal-dot-3">3</span>
+          <span class="medal-meta">
+            <span class="medal-name">Знавець заліза</span>
+            <span class="medal-pts" id="medal-pts-3">0 / 10</span>
+          </span>
+        </button>
+        <button type="button" class="medal-pill" id="medal-pill-4" onclick="switchTab(4)">
+          <span class="medal-icon-dot" id="medal-dot-4">4</span>
+          <span class="medal-meta">
+            <span class="medal-name">Володар файлів</span>
+            <span class="medal-pts" id="medal-pts-4">0 / 10</span>
+          </span>
+        </button>
+        <button type="button" class="medal-pill" id="medal-pill-5" onclick="switchTab(5)">
+          <span class="medal-icon-dot" id="medal-dot-5">5</span>
+          <span class="medal-meta">
+            <span class="medal-name">Кіберзахисник</span>
+            <span class="medal-pts" id="medal-pts-5">0 / 10</span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="tabs-bar no-print" role="tablist" aria-label="Станції тренажера">
+      <button type="button" class="tab-btn" role="tab" id="tab-btn-1" aria-selected="true" aria-controls="panel-1" onclick="switchTab(1)">
+        <i data-lucide="shield-check" aria-hidden="true"></i>
+        <span>1. Абетка безпеки</span>
+        <span class="tab-badge" id="tab-score-1">0/10</span>
+      </button>
+      <button type="button" class="tab-btn" role="tab" id="tab-btn-2" aria-selected="false" aria-controls="panel-2" onclick="switchTab(2)">
+        <i data-lucide="key-round" aria-hidden="true"></i>
+        <span>2. Світ інформації</span>
+        <span class="tab-badge" id="tab-score-2">0/10</span>
+      </button>
+      <button type="button" class="tab-btn" role="tab" id="tab-btn-3" aria-selected="false" aria-controls="panel-3" onclick="switchTab(3)">
+        <i data-lucide="monitor" aria-hidden="true"></i>
+        <span>3. Комп'ютер</span>
+        <span class="tab-badge" id="tab-score-3">0/10</span>
+      </button>
+      <button type="button" class="tab-btn" role="tab" id="tab-btn-4" aria-selected="false" aria-controls="panel-4" onclick="switchTab(4)">
+        <i data-lucide="folder-tree" aria-hidden="true"></i>
+        <span>4. Файли та папки</span>
+        <span class="tab-badge" id="tab-score-4">0/10</span>
+      </button>
+      <button type="button" class="tab-btn" role="tab" id="tab-btn-5" aria-selected="false" aria-controls="panel-5" onclick="switchTab(5)">
+        <i data-lucide="globe" aria-hidden="true"></i>
+        <span>5. Інтернет</span>
+        <span class="tab-badge" id="tab-score-5">0/10</span>
+      </button>
+      <button type="button" class="tab-btn tab-diploma" role="tab" id="tab-btn-diploma" aria-selected="false" aria-controls="panel-diploma" onclick="switchTab('diploma')">
+        <i data-lucide="award" aria-hidden="true"></i>
+        <span>Диплом знавця</span>
+      </button>
+    </nav>
+
+    <!-- ================= STATION 1 ================= -->
+    <section class="station-panel active" id="panel-1" role="tabpanel" aria-labelledby="tab-btn-1">
+      <div class="station-banner">
+        <div>
+          <p class="kicker">Станція 1 • с. 4–6</p>
+          <h2 class="section-title">Абетка <em>безпеки</em> та правила</h2>
+          <p>У комп'ютерному класі підведено небезпечну для життя напругу! Повтори правила, увімкни комп'ютер за алгоритмом, зроби зарядку для очей і пройди гру.</p>
+        </div>
+        <span class="tag">Максимум: 10 балів</span>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3 class="card-title">Правила у комп'ютерному класі</h3>
+          <ul class="rule-list">
+            <li class="rule-item"><span class="rule-num">1</span><span>Не вмикай комп'ютер без дозволу вчителя.</span></li>
+            <li class="rule-item"><span class="rule-num">2</span><span>Не торкайся дротів, розеток та задніх стінок системного блока й монітора.</span></li>
+            <li class="rule-item"><span class="rule-num">3</span><span>Не клади речі на клавіатуру та не ремонтуй пристрої самотужки.</span></li>
+            <li class="rule-item"><span class="rule-num">4</span><span>Сиди прямо, стеж за поставою. Прибирай робоче місце.</span></li>
+            <li class="rule-item"><span class="rule-num">5</span><span>Час безперервної роботи за комп'ютером — <strong>15 хвилин</strong>!</span></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Алгоритм вмикання комп'ютера</h3>
+          <p>Натискай кроки по порядку, щоб правильно увімкнути комп'ютер:</p>
+          <div class="step-btn-row">
+            <button type="button" class="btn btn-soft" id="pc-step-1" onclick="runPcStep(1)">1. Увімкнути монітор</button>
+            <button type="button" class="btn btn-soft" id="pc-step-2" onclick="runPcStep(2)">2. Натиснути Power</button>
+            <button type="button" class="btn btn-soft" id="pc-step-3" onclick="runPcStep(3)">3. Дочекатися завантаження</button>
+          </div>
+          <div class="pc-screen-sim" id="pc-screen-sim">
+            <i data-lucide="monitor-off" aria-hidden="true"></i>
+            <span id="pc-sim-text">Комп'ютер вимкнено. Почни з кроку 1!</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Вправа для очей та фізкультхвилинка</h3>
+          <p>Заплющ очі на рахунок <strong>1–4</strong>, потім подивись удалину на рахунок <strong>1–6</strong> (повторити 4–5 разів). Або покрути головою, як сова, та помахай долоньками!</p>
+          <div class="eye-timer-display">
+            <div class="kicker" id="eye-phase-label">Гімнастика для очей</div>
+            <div class="eye-counter" id="eye-counter-val">Готово</div>
+            <button type="button" class="btn btn-secondary" style="margin-top: var(--space-sm);" id="eye-timer-btn" onclick="startEyeExercise()">
+              <i data-lucide="eye" aria-hidden="true"></i>
+              <span>Запустити рахунок (1–4 і 1–6)</span>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Interactive Game 1 -->
+      <div class="trainer-box">
+        <div class="trainer-head">
+          <div>
+            <p class="kicker">Інтерактивна гра</p>
+            <h3 class="card-title">«Безпечно чи небезпечно» (сортування дій)</h3>
+          </div>
+          <div style="display: flex; gap: var(--space-sm); align-items: center; flex-wrap: wrap;">
+            <span class="badge" id="s1-progress-badge">Ситуація 1 з 10</span>
+            <button type="button" class="btn btn-soft" onclick="resetStation1Game()">Пройти заново</button>
+          </div>
+        </div>
+
+        <div class="situation-card" id="s1-card-area">
+          <div class="situation-text" id="s1-question-text">Підготувати робоче місце та прибрати зайві речі зі стола.</div>
+          <div class="sort-btn-pair" id="s1-btn-pair">
+            <button type="button" class="btn btn-positive" onclick="answerSafety(true)">
+              <i data-lucide="check-circle" aria-hidden="true"></i>
+              <span>Безпечно (Правильно)</span>
+            </button>
+            <button type="button" class="btn btn-danger" onclick="answerSafety(false)">
+              <i data-lucide="alert-triangle" aria-hidden="true"></i>
+              <span>Небезпечно (Порушення)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="feedback-box feedback-neutral" id="s1-feedback">
+          <i data-lucide="info" aria-hidden="true"></i>
+          <span>Обери, чи безпечна ця дія у комп'ютерному класі або під час роботи з інструментами.</span>
+        </div>
+
+        <div class="sorted-log">
+          <div class="log-col">
+            <strong style="color: var(--positive);">Безпечні дії</strong>
+            <ul class="log-list" id="s1-safe-list"></ul>
+          </div>
+          <div class="log-col">
+            <strong style="color: var(--error);">Небезпечні порушення</strong>
+            <ul class="log-list" id="s1-unsafe-list"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="station-nav-footer no-print">
+        <span></span>
+        <button type="button" class="btn btn-primary" onclick="switchTab(2)">
+          <span>Далі: Станція 2 «Світ інформації»</span>
+          <i data-lucide="arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= STATION 2 ================= -->
+    <section class="station-panel" id="panel-2" role="tabpanel" aria-labelledby="tab-btn-2">
+      <div class="station-banner">
+        <div>
+          <p class="kicker">Станція 2 • с. 8–20</p>
+          <h2 class="section-title">Світ <em>інформації</em> та кодування</h2>
+          <p>Дізнайся, як ми сприймаємо інформацію органами чуття, які бувають повідомлення та носії і як шифрувати слова різними способами!</p>
+        </div>
+        <span class="tag">Максимум: 10 балів</span>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3 class="card-title">Сприйняття та види повідомлень</h3>
+          <p><strong>За способом сприйняття (5 органів чуття):</strong> зорова, слухова, нюхова, смакова, дотикова.</p>
+          <p><strong>За способом подання:</strong> текстові, графічні, звукові, умовні сигнали/жести, мультимедійні.</p>
+          <p><strong>Дії з інформацією:</strong> отримання, передавання, опрацювання, зберігання, пошук, захист. Властивості: достовірна, зрозуміла, актуальна, доступна, цінна.</p>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Носії повідомлень та символи</h3>
+          <p><strong>Носії:</strong> давні (скелі, папірус, пергамент) і сучасні (папір, оптичні диски, жорсткі диски / вінчестери, флеш-пам'ять).</p>
+          <p><strong>Символи України та світу:</strong> голуб — мир, лев — сила, стрічка Мебіуса — вторинна переробка. В орнаментах: коло чи хрест — сонце, півень — перемога добра над злом, калина — рід і єдність.</p>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Лабораторія кодів (натисни букву!)</h3>
+          <p>Натискай літери, щоб почути й побачити код <strong>азбуки Морзе</strong>, позицію <strong>прапорців</strong> та <strong>шрифт Брайля</strong>:</p>
+          <div class="code-chips">
+            <button type="button" class="chip" onclick="previewCode('С')">С</button>
+            <button type="button" class="chip" onclick="previewCode('Л')">Л</button>
+            <button type="button" class="chip" onclick="previewCode('О')">О</button>
+            <button type="button" class="chip" onclick="previewCode('В')">В</button>
+            <button type="button" class="chip" onclick="previewCode('Д')">Д</button>
+            <button type="button" class="chip" onclick="previewCode('І')">І</button>
+            <button type="button" class="chip" onclick="previewCode('М')">М</button>
+          </div>
+          <div id="code-lab-output" style="margin-top: var(--space-md); background: var(--surface-container); padding: var(--space-md); border-radius: var(--rounded); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md);">
+            <div>
+              <div class="kicker">Азбука Морзе</div>
+              <strong id="lab-morse" style="font-size: 1.35rem; color: var(--primary);">• • •</strong>
+            </div>
+            <div>
+              <div class="kicker">Брайль</div>
+              <span id="lab-braille"></span>
+            </div>
+            <div>
+              <div class="kicker">Прапорці</div>
+              <span id="lab-flag"></span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Task 2A: Sorter -->
+      <div class="trainer-box">
+        <div class="trainer-head">
+          <div>
+            <p class="kicker">Завдання 2А (6 балів)</p>
+            <h3 class="card-title">Сортувальник типів інформації та повідомлень</h3>
+          </div>
+          <span class="badge" id="s2a-score-badge">0 / 6 балів</span>
+        </div>
+
+        <div class="card-grid" id="s2a-grid"></div>
+      </div>
+
+      <!-- Task 2B: Secret word decoder -->
+      <div class="trainer-box">
+        <div class="trainer-head">
+          <div>
+            <p class="kicker">Завдання 2Б (4 бали)</p>
+            <h3 class="card-title">Декодуй секретні слова!</h3>
+          </div>
+          <span class="badge" id="s2b-score-badge">0 / 4 бали</span>
+        </div>
+
+        <div class="card-grid" id="s2b-grid"></div>
+      </div>
+
+      <div class="station-nav-footer no-print">
+        <button type="button" class="btn btn-soft" onclick="switchTab(1)">
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+          <span>Назад: Станція 1</span>
+        </button>
+        <button type="button" class="btn btn-primary" onclick="switchTab(3)">
+          <span>Далі: Станція 3 «Комп'ютер»</span>
+          <i data-lucide="arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= STATION 3 ================= -->
+    <section class="station-panel" id="panel-3" role="tabpanel" aria-labelledby="tab-btn-3">
+      <div class="station-banner">
+        <div>
+          <p class="kicker">Станція 3 • с. 21–28</p>
+          <h2 class="section-title"><em>Комп'ютер</em> та його пристрої</h2>
+          <p>Від стародавнього абака й київської ЕОМ Сергія Лебедєва — до сучасного персонального комп'ютера та швидкого друку на клавіатурі!</p>
+        </div>
+        <span class="tag">Максимум: 10 балів</span>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3 class="card-title">Історія обчислень (с. 21–23)</h3>
+          <ul class="rule-list">
+            <li class="rule-item"><span class="rule-num">1</span><span><strong>Давня лічба:</strong> пальці, камінчики, вузлики, рахівниці — <em>абак</em> (Греція, Рим), <em>суань-пань</em> (Китай), <em>соробан</em> (Японія), «щоти».</span></li>
+            <li class="rule-item"><span class="rule-num">2</span><span><strong>Механічні машини:</strong> Паскаліна Блеза Паскаля (додавання) та арифмометр Лейбніца (чотири дії).</span></li>
+            <li class="rule-item"><span class="rule-num">3</span><span><strong>Перша ЕОМ у Європі:</strong> створена в Києві під керівництвом академіка <strong>Сергія Лебедєва</strong>. Сучасний український суперкомп'ютер — СКІТ-4.</span></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Процесор і пам'ять (с. 24–25)</h3>
+          <p><strong>Процесор</strong> — «мозок» комп'ютера, що опрацьовує дані й керує роботою всіх пристроїв.</p>
+          <p><strong>Внутрішня (оперативна) пам'ять</strong> — зберігає дані, з якими комп'ютер працює прямо зараз.</p>
+          <p><strong>Зовнішня пам'ять</strong> — тривале зберігання даних: жорсткий диск (вінчестер), зовнішній диск, оптичний диск, флеш-пам'ять, карта пам'яті. Кнопка «Зберегти» має вигляд дискети!</p>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">5 груп клавіш клавіатури (с. 27–28)</h3>
+          <p><strong>Групи:</strong> алфавітно-цифрові, функціональні (F1–F12), спеціальні (Enter, Esc, Ctrl, Alt, Shift, Пробіл), керування курсором (стрілки), мала цифрова клавіатура.</p>
+          <p><strong>Основна позиція пальців:</strong> ліва рука — <strong>Ф І В А</strong> (вказівний на <strong>А</strong>), права рука — <strong>О Л Д Ж</strong> (вказівний на <strong>О</strong>), великі пальці — на <strong>Пробілі</strong>.</p>
+        </article>
+      </div>
+
+      <!-- Task 3A: Device sorter -->
+      <div class="trainer-box">
+        <div class="trainer-head">
+          <div>
+            <p class="kicker">Тренажер 3А (8 балів)</p>
+            <h3 class="card-title">Розподіли пристрої комп'ютера за групами</h3>
+          </div>
+          <div style="display: flex; gap: var(--space-sm); align-items: center; flex-wrap: wrap;">
+            <span class="badge" id="s3a-score-badge">0 / 8 пристроїв</span>
+            <button type="button" class="btn btn-soft" onclick="resetStation3Devices()">Скинути</button>
+          </div>
+        </div>
+        <p id="s3a-instruction"><strong>Крок 1:</strong> Обери будь-який пристрій нижче. <strong>Крок 2:</strong> Натисни на групу, до якої він належить!</p>
+
+        <div class="device-grid" id="s3a-devices"></div>
+
+        <div class="bucket-grid">
+          <button type="button" class="bucket-btn" onclick="assignDeviceToGroup('input')">
+            <i data-lucide="log-in" aria-hidden="true"></i>
+            <strong>Пристрої введення</strong>
+            <span class="kicker" id="bucket-count-input">0 пристроїв</span>
+          </button>
+          <button type="button" class="bucket-btn" onclick="assignDeviceToGroup('output')">
+            <i data-lucide="log-out" aria-hidden="true"></i>
+            <strong>Пристрої виведення</strong>
+            <span class="kicker" id="bucket-count-output">0 пристроїв</span>
+          </button>
+          <button type="button" class="bucket-btn" onclick="assignDeviceToGroup('memory')">
+            <i data-lucide="hard-drive" aria-hidden="true"></i>
+            <strong>Пам'ять та зберігання</strong>
+            <span class="kicker" id="bucket-count-memory">0 пристроїв</span>
+          </button>
+        </div>
+
+        <div class="feedback-box feedback-neutral" id="s3a-feedback">
+          <i data-lucide="mouse-pointer-click" aria-hidden="true"></i>
+          <span>Обери пристрій зі списку, а потім натисни потрібну групу.</span>
+        </div>
+      </div>
+
+      <!-- Task 3B: Interactive keyboard -->
+      <div class="trainer-box">
+        <div class="trainer-head">
+          <div>
+            <p class="kicker">Тренажер 3Б (2 бали)</p>
+            <h3 class="card-title">Практикум на клавіатурі «ФІВА ОЛДЖ»</h3>
+          </div>
+          <span class="badge" id="s3b-score-badge">0 / 2 завдання</span>
+        </div>
+
+        <div class="feedback-box feedback-neutral" id="s3b-prompt">
+          <i data-lucide="keyboard" aria-hidden="true"></i>
+          <span id="s3b-prompt-text">Завдання 1: Натисни клавіші, де стоять вказівні пальці лівої та правої руки (А та О).</span>
+        </div>
+
+        <div class="kbd-wrap" id="interactive-keyboard">
+          <div class="kbd-row">
+            <button type="button" class="key-cap key-special" onclick="pressVirtualKey('Esc')">Esc</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Й')">Й</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Ц')">Ц</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('У')">У</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('К')">К</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Е')">Е</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Н')">Н</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Г')">Г</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Ш')">Ш</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Щ')">Щ</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('З')">З</button>
+          </div>
+          <div class="kbd-row">
+            <button type="button" class="key-cap home-left" onclick="pressVirtualKey('Ф')">Ф</button>
+            <button type="button" class="key-cap home-left" onclick="pressVirtualKey('І')">І</button>
+            <button type="button" class="key-cap home-left" onclick="pressVirtualKey('В')">В</button>
+            <button type="button" class="key-cap home-left" onclick="pressVirtualKey('А')">А</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('П')">П</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Р')">Р</button>
+            <button type="button" class="key-cap home-right" onclick="pressVirtualKey('О')">О</button>
+            <button type="button" class="key-cap home-right" onclick="pressVirtualKey('Л')">Л</button>
+            <button type="button" class="key-cap home-right" onclick="pressVirtualKey('Д')">Д</button>
+            <button type="button" class="key-cap home-right" onclick="pressVirtualKey('Ж')">Ж</button>
+            <button type="button" class="key-cap key-special key-wide" onclick="pressVirtualKey('Enter')">Enter ↵</button>
+          </div>
+          <div class="kbd-row">
+            <button type="button" class="key-cap key-special" onclick="pressVirtualKey('Shift')">Shift</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Я')">Я</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Ч')">Ч</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('С')">С</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('М')">М</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('И')">И</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Т')">Т</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Ь')">Ь</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Б')">Б</button>
+            <button type="button" class="key-cap" onclick="pressVirtualKey('Ю')">Ю</button>
+          </div>
+          <div class="kbd-row">
+            <button type="button" class="key-cap key-special" onclick="pressVirtualKey('Ctrl')">Ctrl</button>
+            <button type="button" class="key-cap key-special" onclick="pressVirtualKey('Alt')">Alt</button>
+            <button type="button" class="key-cap key-space" onclick="pressVirtualKey('Пробіл')">Пробіл (великі пальці)</button>
+            <button type="button" class="key-cap key-special" onclick="pressVirtualKey('←')">←</button>
+            <button type="button" class="key-cap key-special" onclick="pressVirtualKey('→')">→</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="station-nav-footer no-print">
+        <button type="button" class="btn btn-soft" onclick="switchTab(2)">
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+          <span>Назад: Станція 2</span>
+        </button>
+        <button type="button" class="btn btn-primary" onclick="switchTab(4)">
+          <span>Далі: Станція 4 «Файли та папки»</span>
+          <i data-lucide="arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= STATION 4 ================= -->
+    <section class="station-panel" id="panel-4" role="tabpanel" aria-labelledby="tab-btn-4">
+      <div class="station-banner">
+        <div>
+          <p class="kicker">Станція 4 • с. 29–35</p>
+          <h2 class="section-title">Робочий стіл, <em>файли</em> та папки</h2>
+          <p>Досліджуй Робочий стіл, запам'ятай заборонені символи в іменах файлів, навчися розрізняти розширення та орієнтуватися в дереві папок.</p>
+        </div>
+        <span class="tag">Максимум: 10 балів</span>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3 class="card-title">Робочий стіл і дії з мишею (с. 30–31)</h3>
+          <p>На Робочому столі розміщені значки (<strong>Цей ПК</strong>, <strong>Кошик</strong>, папки й програми) та <strong>Панель завдань</strong> (кнопка Пуск, значки програм, мовна панель, годинник).</p>
+          <ul class="rule-list">
+            <li class="rule-item"><span class="rule-num">1</span><span><strong>Вибрати об'єкт:</strong> клацнути 1 раз лівою клавішею миші.</span></li>
+            <li class="rule-item"><span class="rule-num">2</span><span><strong>Відкрити об'єкт:</strong> клацнути двічі лівою клавішею миші.</span></li>
+            <li class="rule-item"><span class="rule-num">3</span><span><strong>Перетягнути:</strong> перемістити з натиснутою лівою клавішею.</span></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Файли, розширення та імена (с. 32–33)</h3>
+          <p><strong>Файл</strong> має власне ім'я та <strong>розширення</strong> після крапки (воно вказує тип даних: <code>.docx</code>, <code>.bmp</code>, <code>.pptx</code>).</p>
+          <p><strong>Заборонені символи</strong> в імені файлу або папки:</p>
+          <div class="pill-info" style="font-size: 1.05rem; letter-spacing: 0.12em;">\ / : * ? " &lt; &gt; |</div>
+          <p style="margin-top: var(--space-sm);">Слово «папка» прийшло з німецької мови; папки групують файли за певною ознакою.</p>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Інтерактивне дерево папок (с. 34)</h3>
+          <p>Папка всередині іншої папки називається <strong>вкладеною</strong>. Натисни на папку, щоб розкрити або згорнути її:</p>
+          <div class="folder-tree">
+            <button type="button" class="tree-node" onclick="toggleFolderBranch('branch-school')">
+              <i data-lucide="folder-open" aria-hidden="true"></i>
+              <span>📁 Моя школа (коренева папка)</span>
+            </button>
+            <div class="tree-children" id="branch-school">
+              <button type="button" class="tree-node" onclick="toggleFolderBranch('branch-art')">
+                <i data-lucide="folder" aria-hidden="true"></i>
+                <span>📁 Уроки мистецтва (вкладена папка)</span>
+              </button>
+              <div class="tree-children" id="branch-art">
+                <div class="log-item">🖼️ Україна_мій_дім.bmp (файл-листок)</div>
+              </div>
+              <div class="log-item">📄 Мій_клас.docx (текстовий файл)</div>
+              <div class="log-item">📊 Шкільні_друзі.pptx (презентація)</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Task 4A: Filename quiz -->
+      <div class="trainer-box">
+        <div class="trainer-head">
+          <div>
+            <p class="kicker">Вікторина 4А (6 балів)</p>
+            <h3 class="card-title">Знайди помилку в імені файлу</h3>
+          </div>
+          <span class="badge" id="s4a-score-badge">0 / 6 балів</span>
+        </div>
+        <p>Перевір, чи дозволено назвати файл або папку таким іменем (пам'ятай про заборонені символи <code>\ / : * ? " &lt; &gt; |</code>):</p>
+        <div class="card-grid" id="s4a-grid"></div>
+      </div>
+
+      <!-- Task 4B: Match extensions -->
+      <div class="trainer-box">
+        <div class="trainer-head">
+          <div>
+            <p class="kicker">Завдання 4Б (4 бали)</p>
+            <h3 class="card-title">З'єднай розширення (або об'єкт) з типом даних</h3>
+          </div>
+          <div style="display: flex; gap: var(--space-sm); align-items: center; flex-wrap: wrap;">
+            <span class="badge" id="s4b-score-badge">0 / 4 пари</span>
+            <button type="button" class="btn btn-soft" onclick="resetStation4Match()">Скинути</button>
+          </div>
+        </div>
+        <div class="match-columns" id="s4b-match-area">
+          <div class="match-col" id="s4b-left-col"></div>
+          <div class="match-col" id="s4b-right-col"></div>
+        </div>
+        <div class="feedback-box feedback-neutral" id="s4b-feedback">
+          <i data-lucide="link-2" aria-hidden="true"></i>
+          <span>Спочатку обери файл ліворуч, а потім відповідний тип праворуч!</span>
+        </div>
+      </div>
+
+      <div class="station-nav-footer no-print">
+        <button type="button" class="btn btn-soft" onclick="switchTab(3)">
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+          <span>Назад: Станція 3</span>
+        </button>
+        <button type="button" class="btn btn-primary" onclick="switchTab(5)">
+          <span>Далі: Станція 5 «Мережа Інтернет»</span>
+          <i data-lucide="arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= STATION 5 ================= -->
+    <section class="station-panel" id="panel-5" role="tabpanel" aria-labelledby="tab-btn-5">
+      <div class="station-banner">
+        <div>
+          <p class="kicker">Станція 5 • с. 36–46</p>
+          <h2 class="section-title">Мережа <em>Інтернет</em> та безпека</h2>
+          <p>Подорожуй Всесвітньою павутиною WWW, вивчи будову браузера, правила кібербезпеки, нетикет та авторське право!</p>
+        </div>
+        <span class="tag">Максимум: 10 балів</span>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3 class="card-title">Макет вікна браузера (натисни елемент!)</h3>
+          <div class="browser-mock">
+            <div class="browser-bar">
+              <button type="button" class="browser-part-btn" onclick="explainBrowser('nav')">← → Оновити</button>
+              <button type="button" class="browser-part-btn" onclick="explainBrowser('tab')">Вкладка: Читанка</button>
+              <button type="button" class="browser-part-btn" onclick="explainBrowser('addr')">Адресний рядок</button>
+              <button type="button" class="browser-part-btn" onclick="explainBrowser('star')">★ Закладка</button>
+            </div>
+            <div class="browser-body">
+              <p><strong>Робоче поле:</strong> тут відображається вебсторінка (текст, малюнки, звук, відео).</p>
+              <button type="button" class="hyperlink-demo" onclick="explainBrowser('link')">Це гіперпосилання (наведи та клацни)</button>
+            </div>
+            <div class="feedback-box feedback-neutral" id="browser-explain-box">
+              <i data-lucide="mouse-pointer" aria-hidden="true"></i>
+              <span>Натисни будь-яку частину браузера вище, щоб пригадати її призначення.</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Віруси, антивіруси та безпека (с. 40–42)</h3>
+          <ul class="rule-list">
+            <li class="rule-item"><span class="rule-num rule-num-grape">1</span><span>Нікому не повідомляй паролі та не розголошуй дані про себе й близьких.</span></li>
+            <li class="rule-item"><span class="rule-num rule-num-grape">2</span><span>Не погоджуйся на зустрічі з незнайомцями; якщо щось налякало — скажи батькам чи вчителю.</span></li>
+            <li class="rule-item"><span class="rule-num rule-num-grape">3</span><span>Відкривай сайти з дозволу дорослих, уникай надмірної реклами та небезпечних попереджень.</span></li>
+            <li class="rule-item"><span class="rule-num rule-num-grape">4</span><span>Користуйся <strong>антивірусними програмами</strong> та дотримуйся <strong>нетикету</strong> (ввічливості в мережі).</span></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3 class="card-title">Освітні ресурси та знак © (с. 44–46)</h3>
+          <p><strong>Електронні освітні ресурси:</strong> електронні бібліотеки, енциклопедії (наприклад, Вікіпедія — матеріали треба перевіряти!), словники, підручники, аудіокниги, відеоуроки, тести.</p>
+          <p><strong>Авторське право:</strong> право автора на твір охороняє закон. Знак охорони — <strong>©</strong> (копірайт). Використовуючи матеріали з мережі, обов'язково вказуй автора, назву та джерело!</p>
+        </article>
+      </div>
+
+      <!-- Task 5: Internet Safety Quiz -->
+      <div class="trainer-box">
+        <div class="trainer-head">
+          <div>
+            <p class="kicker">Підсумковий тест станції (10 балів)</p>
+            <h3 class="card-title">Кібер-квест: безпека та інтернет-грамотність</h3>
+          </div>
+          <div style="display: flex; gap: var(--space-sm); align-items: center; flex-wrap: wrap;">
+            <span class="badge" id="s5-progress-badge">Питання 1 з 10</span>
+            <button type="button" class="btn btn-soft" onclick="resetStation5Quiz()">Спочатку</button>
+          </div>
+        </div>
+
+        <div id="s5-quiz-area">
+          <h4 class="card-title" id="s5-question-text" style="margin-bottom: var(--space-md);"></h4>
+          <div class="quiz-options" id="s5-options-list"></div>
+        </div>
+
+        <div class="feedback-box feedback-neutral" id="s5-feedback">
+          <i data-lucide="shield" aria-hidden="true"></i>
+          <span>Обери правильний варіант відповіді.</span>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: var(--space-sm);" id="s5-next-wrap">
+          <button type="button" class="btn btn-secondary" id="s5-next-btn" onclick="nextStation5Question()" disabled>
+            <span>Наступне питання</span>
+            <i data-lucide="arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="station-nav-footer no-print">
+        <button type="button" class="btn btn-soft" onclick="switchTab(4)">
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+          <span>Назад: Станція 4</span>
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="switchTab('diploma')">
+          <span>Перейти до Диплома знавця!</span>
+          <i data-lucide="award" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= DIPLOMA PANEL ================= -->
+    <section class="station-panel" id="panel-diploma" role="tabpanel" aria-labelledby="tab-btn-diploma">
+      <div class="station-banner no-print">
+        <div>
+          <p class="kicker">Підсумкова нагорода</p>
+          <h2 class="section-title">Твій <em>Диплом</em> знавця інформатики</h2>
+          <p>Перевір свої віртуальні медалі з усіх 5 станцій, впиши своє ім'я та збережи або роздрукуй іменний диплом за І семестр!</p>
+        </div>
+        <span class="badge" id="diploma-rank-badge">Статус: Дослідник</span>
+      </div>
+
+      <div class="card no-print">
+        <div class="form-row">
+          <div class="field-group" style="flex: 1 1 240px;">
+            <label class="field-label" for="diploma-name-input">Прізвище та ім'я учня / учениці</label>
+            <input type="text" id="diploma-name-input" class="input-pill" maxlength="40" value="" oninput="updateStudentName(this.value)">
+          </div>
+          <div class="field-group" style="flex: 0 1 180px;">
+            <label class="field-label" for="diploma-class-input">Клас</label>
+            <input type="text" id="diploma-class-input" class="input-pill" maxlength="12" value="3 клас" oninput="updateStudentClass(this.value)">
+          </div>
+          <button type="button" class="btn btn-primary" onclick="downloadDiplomaPng()">
+            <i data-lucide="download" aria-hidden="true"></i>
+            <span>Зберегти диплом (PNG)</span>
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="window.print()">
+            <i data-lucide="printer" aria-hidden="true"></i>
+            <span>Друкувати</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="diploma-frame" id="diploma-visual-card">
+        <div class="diploma-inner-border">
+          <svg width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+            <circle cx="36" cy="36" r="32" fill="var(--primary-soft)" stroke="var(--primary)" stroke-width="4" />
+            <polygon points="36,14 42,27 56,29 46,39 48,53 36,46 24,53 26,39 16,29 30,27" fill="var(--primary)" />
+          </svg>
+          <p class="kicker">Нагороджується за успішне завершення І семестру</p>
+          <h2 class="section-title" style="font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);">Диплом <em>знавця</em> інформатики</h2>
+          <div class="diploma-student" id="diploma-display-name">Юний дослідник / Юна дослідниця</div>
+          <p id="diploma-display-subtitle" style="font-weight: 700; color: var(--on-surface-variant);">Учень / учениця 3 класу • Підсумковий квест «Інформатичний калейдоскоп»</p>
+
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md);">
+            <span class="badge" style="font-size: 1rem; padding: 8px 18px;" id="diploma-score-pill">Результат: 0 / 50 балів</span>
+            <span class="tag" style="font-size: 1rem; padding: 8px 18px;" id="diploma-medal-pill">Зібрано медалей: 0 / 5</span>
+          </div>
+
+          <div class="diploma-medals-showcase" id="diploma-medals-list"></div>
+
+          <p class="kicker" id="diploma-date-line" style="margin-top: var(--space-sm);">Підручник «Я досліджую світ», 3 клас (ч. 2), с. 4–46</p>
+        </div>
+      </div>
+
+      <div class="station-nav-footer no-print">
+        <button type="button" class="btn btn-soft" onclick="switchTab(5)">
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+          <span>Назад: Станція 5</span>
+        </button>
+        <button type="button" class="btn btn-quiet" onclick="switchTab(1)">
+          <span>Повернутися до Станції 1</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="site-footer no-print">
+      <strong>Джерело матеріалів:</strong> Підручник «Я досліджую світ» для 3 класу (Частина 2), автори М. М. Корнієнко, С. М. Крамаровська, І. Т. Зарецька, вид-во «Ранок», 2020 (с. 4–46). Вбудований звуковий синтезатор працює автономно без сторонніх аудіофайлів.
+    </footer>
+  </div>
+
+  <api-shim></api-shim>
+  <script>
+    // ==================== STATE ====================
+    var appState = {
+      currentTab: 1,
+      studentName: ``,
+      studentClass: `3 клас`,
+      soundEnabled: true,
+      pcStepsDone: [false, false, false],
+      s1Index: 0,
+      s1Results: [], // array of { text, chosenSafe, correct }
+      s2aAnswers: {}, // id -> chosenCategory
+      s2bSolved: {}, // id -> true
+      s3aAssigned: {}, // deviceId -> group
+      s3bStep: 0, // 0, 1, 2 (done)
+      s3bFirstKeyA: false,
+      s3bFirstKeyO: false,
+      s4aAnswers: {}, // id -> chosenValid (boolean)
+      s4bMatched: {}, // leftId -> true
+      s5Index: 0,
+      s5Answers: {} // qIndex -> { chosenIndex, correct }
+    };
+
+    var audioCtx = null;
+    var eyeTimerInterval = null;
+
+    // ==================== DATA ====================
+    var S1_SITUATIONS = [
+      { id: 1, text: `Підготувати робоче місце та прибрати зайві речі зі стола.`, safe: true, note: `Правильно! Організоване робоче місце оберігає від травм і пошкоджень.` },
+      { id: 2, text: `Торкатися дротів, розеток і задньої стінки системного блока.`, safe: false, note: `Небезпечно! До робочих місць підведено небезпечну для життя напругу.` },
+      { id: 3, text: `Покласти пенал, підручник і пляшку з водою на клавіатуру.`, safe: false, note: `Небезпечно! Речі можуть пошкодити або залити клавіатуру.` },
+      { id: 4, text: `Працювати за комп'ютером безперервно 15 хвилин, а потім зробити вправу для очей.`, safe: true, note: `Правильно! Безперервна робота триває 15 хвилин, а перерва знімає втому з очей.` },
+      { id: 5, text: `Спробувати самотужки відремонтувати розетку чи мишку.`, safe: false, note: `Небезпечно! Не ремонтуй пристрої самотужки — одразу поклич учителя.` },
+      { id: 6, text: `Увімкнути комп'ютер лише з дозволу вчителя, почавши з монітора.`, safe: true, note: `Правильно! За алгоритмом спочатку вмикаємо монітор, потім кнопку Power.` },
+      { id: 7, text: `Увімкнути комп'ютер без дозволу вчителя, щойно зайдеш у клас.`, safe: false, note: `Небезпечно! Роботу завжди розпочинай і завершуй лише з дозволу вчителя.` },
+      { id: 8, text: `Сидіти прямо, стежити за поставою та прибрати місце після роботи.`, safe: true, note: `Правильно! Рівна постава зберігає здоров'я хребта й очей.` },
+      { id: 9, text: `Повідомити вчителя, якщо помічено пошкодження дроту чи пристрою.`, safe: true, note: `Правильно! Перед роботою потрібно перевіряти справність пристроїв.` },
+      { id: 10, text: `Сидіти за комп'ютером дві години поспіль без відпочинку.`, safe: false, note: `Небезпечно! Це перевтомлює очі та погіршує самопочуття.` }
+    ];
+
+    var CODE_SAMPLES = {
+      'С': { morse: `• • •`, braille: [0, 1, 1, 0, 1, 0], flag: `Ліва рука внизу, права вгору-вбік` },
+      'Л': { morse: `• — • •`, braille: [1, 0, 1, 0, 1, 0], flag: `Ліва вбік, права донизу` },
+      'О': { morse: `— — —`, braille: [1, 0, 0, 1, 1, 0], flag: `Обидва прапорці під кутом праворуч` },
+      'В': { morse: `• — —`, braille: [0, 1, 1, 1, 0, 1], flag: `Ліва рука вгорі, права вбік` },
+      'Д': { morse: `— • •`, braille: [1, 1, 0, 1, 0, 0], flag: `Права рука вгорі, ліва внизу` },
+      'І': { morse: `• •`, braille: [0, 1, 1, 0, 0, 0], flag: `Прапорці схрещені догори` },
+      'М': { morse: `— —`, braille: [1, 1, 0, 0, 1, 0], flag: `Обидва прапорці розведені вбік` }
+    };
+
+    var S2A_ITEMS = [
+      { id: `i1`, text: `Перегляд мультфільму зі звуком і картинкою`, cat: `multimedia`, opts: [
+        { k: `text`, l: `Текстове` }, { k: `multimedia`, l: `Мультимедійне` }, { k: `smell`, l: `Нюхова` }
+      ]},
+      { id: `i2`, text: `Дзвінок на шкільний урок`, cat: `sound`, opts: [
+        { k: `sound`, l: `Звукове (слухова)` }, { k: `graphic`, l: `Графічне` }, { k: `taste`, l: `Смакова` }
+      ]},
+      { id: `i3`, text: `Червоне світло світлофора на переході`, cat: `signal`, opts: [
+        { k: `text`, l: `Текстове` }, { k: `signal`, l: `Умовний сигнал` }, { k: `smell`, l: `Нюхова` }
+      ]},
+      { id: `i4`, text: `Картина, фотографія або орнамент на рушнику`, cat: `graphic`, opts: [
+        { k: `graphic`, l: `Графічне` }, { k: `sound`, l: `Звукове` }, { k: `touch`, l: `Дотикова` }
+      ]},
+      { id: `i5`, text: `Аромат свіжих квітів чи хліба`, cat: `smell`, opts: [
+        { k: `taste`, l: `Смакова` }, { k: `smell`, l: `Нюхова` }, { k: `graphic`, l: `Графічне` }
+      ]},
+      { id: `i6`, text: `Відчуття теплого чи пухнастого кошеняти рукою`, cat: `touch`, opts: [
+        { k: `touch`, l: `Дотикова` }, { k: `sound`, l: `Слухова` }, { k: `text`, l: `Текстове` }
+      ]}
+    ];
+
+    var S2B_PUZZLES = [
+      {
+        id: `p1`,
+        title: `1. Азбука Морзе`,
+        clue: `Ключ: С = ••• | Л = •—•• | О = ——— | В = •——`,
+        prompt: `• • •  /  • — • •  /  — — —  /  • — —  /  — — —`,
+        answer: `СЛОВО`,
+        type: `morse`
+      },
+      {
+        id: `p2`,
+        title: `2. Числовий код алфавіту`,
+        clue: `Ключ: А=1, Д=6, И=11, К=15, М=17, О=19, Р=21`,
+        prompt: `15 – 19 – 6`,
+        answer: `КОД`,
+        type: `num`
+      },
+      {
+        id: `p3`,
+        title: `3. Шрифт Брайля (рельєфні крапки)`,
+        clue: `Ключ: Д = [1,2,4] | І = [2,3] | М = [1,2,5]`,
+        prompt: `BRAILLE_DIM`,
+        answer: `ДІМ`,
+        type: `braille`
+      },
+      {
+        id: `p4`,
+        title: `4. Орнаментальний символ`,
+        clue: `Народні майстри вплітали у вишивку графічні символи (с. 19)`,
+        prompt: `Яке небесне світило позначають колом або хрестом в українському орнаменті?`,
+        answer: `СОНЦЕ`,
+        type: `symbol`
+      }
+    ];
+
+    var S3A_DEVICES = [
+      { id: `d1`, name: `Клавіатура`, group: `input`, icon: `keyboard` },
+      { id: `d2`, name: `Монітор`, group: `output`, icon: `monitor` },
+      { id: `d3`, name: `Сканер`, group: `input`, icon: `scan-line` },
+      { id: `d4`, name: `Принтер`, group: `output`, icon: `printer` },
+      { id: `d5`, name: `Флеш-пам'ять`, group: `memory`, icon: `usb` },
+      { id: `d6`, name: `Мікрофон`, group: `input`, icon: `mic` },
+      { id: `d7`, name: `Навушники`, group: `output`, icon: `headphones` },
+      { id: `d8`, name: `Жорсткий диск (вінчестер)`, group: `memory`, icon: `hard-drive` }
+    ];
+    var selectedDeviceId = null;
+
+    var S4A_NAMES = [
+      { id: `n1`, name: `Друзі.docx`, valid: true, reason: `Допустиме ім'я: містить лише букви та розширення .docx.` },
+      { id: `n2`, name: `dog*black.bmp`, valid: false, reason: `Помилка! Зірочка (*) заборонена в імені файлу.` },
+      { id: `n3`, name: `клас:третій.pptx`, valid: false, reason: `Помилка! Двокрапка (:) заборонена в імені файлу.` },
+      { id: `n4`, name: `Школа № 5.docx`, valid: true, reason: `Допустиме ім'я: пробіл, знак № та цифри дозволені.` },
+      { id: `n5`, name: `мої/малюнки.bmp`, valid: false, reason: `Помилка! Скісна риска (/) заборонена в імені файлу.` },
+      { id: `n6`, name: `загадка?.docx`, valid: false, reason: `Помилка! Знак питання (?) заборонений в імені файлу.` }
+    ];
+
+    var S4B_PAIRS = [
+      { id: `m1`, left: `свято.docx`, rightId: `r_doc`, rightText: `Текстовий документ` },
+      { id: `m2`, left: `фото.bmp`, rightId: `r_img`, rightText: `Графічне зображення (малюнок)` },
+      { id: `m3`, left: `дружба.pptx`, rightId: `r_ppt`, rightText: `Комп'ютерна презентація` },
+      { id: `m4`, left: `Моя школа (папка)`, rightId: `r_dir`, rightText: `Контейнер для впорядкування файлів` }
+    ];
+    var S4B_RIGHT_ORDER = [`r_ppt`, `r_doc`, `r_dir`, `r_img`];
+    var selectedMatchLeft = null;
+
+    var S5_QUESTIONS = [
+      {
+        q: `1. Незнайомець у грі чи чаті просить назвати твою домашню адресу та пароль. Як ти вчиниш?`,
+        opts: [
+          `Ніколи не повідомлю паролі чи особисті дані та розповім батькам або вчителю`,
+          `Надішлю тільки домашню адресу, без пароля`,
+          `Назву пароль, якщо незнайомець пообіцяє подарунок`
+        ],
+        correct: 0,
+        explain: `Правило безпеки (с. 40): не повідомляй паролі, не розголошуй дані про себе й одразу повідом дорослих!`
+      },
+      {
+        q: `2. На екрані браузера з'явилося попередження: «Цей сайт може бути небезпечним». Що треба зробити?`,
+        opts: [
+          `Усе одно відкрити сайт, бо там цікава картинка`,
+          `Не відкривати сайт і закрити сторінку`,
+          `Вимкнути антивірус, щоб повідомлення зникло`
+        ],
+        correct: 1,
+        explain: `Не відкривай сайти з таким попередженням — там можуть бути віруси!`
+      },
+      {
+        q: `3. Яка спеціальна програма блокує та знищує комп'ютерні віруси?`,
+        opts: [
+          `Графічний редактор`,
+          `Текстовий редактор`,
+          `Антивірусна програма`
+        ],
+        correct: 2,
+        explain: `Антивірусні програми захищають комп'ютер від шкідливих вірусів.`
+      },
+      {
+        q: `4. Як називається спеціальна програма для перегляду вебсторінок?`,
+        opts: [
+          `Браузер`,
+          `Калькулятор`,
+          `Слайдер`
+        ],
+        correct: 0,
+        explain: `Браузер (Google Chrome, Firefox, Opera, Safari) допомагає подорожувати інтернетом.`
+      },
+      {
+        q: `5. Якого вигляду набуває вказівник миші, коли його навести на гіперпосилання?`,
+        opts: [
+          `Вигляду годинника`,
+          `Вигляду руки`,
+          `Вигляду ножиць`
+        ],
+        correct: 1,
+        explain: `На гіперпосиланні вказівник миші перетворюється на руку!`
+      },
+      {
+        q: `6. Що означає міжнародний знак ©, який ставлять біля творів та матеріалів?`,
+        opts: [
+          `Дозвіл видаляти файли з кошика`,
+          `Знак охорони авторського права (копірайт)`,
+          `Знак вторинної переробки паперу`
+        ],
+        correct: 1,
+        explain: `© — знак охорони авторського права. Потрібно завжди вказувати автора та джерело!`
+      },
+      {
+        q: `7. Якщо ти береш цитату або інструкцію з дитячого порталу для навчання, що обов'язково потрібно додати?`,
+        opts: [
+          `Посилання на автора, назву матеріалу та сайт`,
+          `Приховати назву сайту`,
+          `Придумати іншого автора`
+        ],
+        correct: 0,
+        explain: `Використання безкоштовних навчальних матеріалів обов'язково потребує посилання на автора й джерело.`
+      },
+      {
+        q: `8. Що таке «нетикет»?`,
+        opts: [
+          `Назва нового комп'ютерного вірусу`,
+          `Правила ввічливого та доброзичливого спілкування в мережі інтернет`,
+          `Пристрій для друкування фотографій`
+        ],
+        correct: 1,
+        explain: `Нетикет — це правила культури й ввічливості під час електронного спілкування.`
+      },
+      {
+        q: `9. Чому інформацію з відкритих онлайн-енциклопедій (наприклад, Вікіпедії) варто перевіряти?`,
+        opts: [
+          `Бо кожен може їх редагувати, і відомості не завжди бувають достовірними`,
+          `Бо там немає жодної корисної інформації`,
+          `Бо в інтернеті працюють лише калькулятори`
+        ],
+        correct: 0,
+        explain: `Матеріали відкритих енциклопедій може редагувати кожен, тож інформацію важливо перевіряти!`
+      },
+      {
+        q: `10. Коли у світі відзначають День безпечного інтернету?`,
+        opts: [
+          `У вересні, в перший день навчання`,
+          `У вівторок другого тижня лютого`,
+          `У грудні, на День Святого Миколая`
+        ],
+        correct: 1,
+        explain: `У вівторок другого тижня лютого відзначають День безпечного інтернету (с. 41).`
+      }
+    ];
+
+    // ==================== AUDIO SYNTH ====================
+    function playTone(type) {
+      if (!appState.soundEnabled) return;
+      try {
+        var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        if (!audioCtx) audioCtx = new AudioContextClass();
+        if (audioCtx.state === `suspended`) audioCtx.resume();
+
+        var now = audioCtx.currentTime;
+        var notes = [];
+        if (type === `success`) {
+          notes = [{ f: 523.25, d: 0.09, t: 0 }, { f: 659.25, d: 0.09, t: 0.08 }, { f: 783.99, d: 0.16, t: 0.16 }];
+        } else if (type === `medal`) {
+          notes = [{ f: 523.25, d: 0.1, t: 0 }, { f: 659.25, d: 0.1, t: 0.09 }, { f: 783.99, d: 0.1, t: 0.18 }, { f: 1046.5, d: 0.25, t: 0.27 }];
+        } else if (type === `error`) {
+          notes = [{ f: 293.66, d: 0.12, t: 0 }, { f: 220.0, d: 0.18, t: 0.11 }];
+        } else if (type === `dot`) {
+          notes = [{ f: 680, d: 0.08, t: 0 }];
+        } else if (type === `dash`) {
+          notes = [{ f: 680, d: 0.22, t: 0 }];
+        } else {
+          notes = [{ f: 587.33, d: 0.06, t: 0 }];
+        }
+
+        notes.forEach(function(n) {
+          var osc = audioCtx.createOscillator();
+          var gain = audioCtx.createGain();
+          osc.type = type === `error` ? `triangle` : `sine`;
+          osc.frequency.setValueAtTime(n.f, now + n.t);
+          gain.gain.setValueAtTime(0.001, now + n.t);
+          gain.gain.exponentialRampToValueAtTime(0.14, now + n.t + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + n.t + n.d);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + n.t);
+          osc.stop(now + n.t + n.d + 0.02);
+        });
+      } catch (e) {
+        // Audio gracefully ignored if blocked
+      }
+    }
+
+    function playMorseSequence(str) {
+      if (!appState.soundEnabled || typeof str !== `string` || !str) return;
+      var tokens = str.replace(/\s+/g, ``).split(``);
+      var delay = 0;
+      tokens.forEach(function(ch) {
+        if (ch === `•` || ch === `.`) {
+          setTimeout(function() { playTone(`dot`); }, delay);
+          delay += 160;
+        } else if (ch === `—` || ch === `-`) {
+          setTimeout(function() { playTone(`dash`); }, delay);
+          delay += 300;
+        }
+      });
+    }
+
+    // ==================== PERSISTENCE ====================
+    async function saveState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+          await window.notebookAppApi.setAppState(appState);
+        }
+      } catch (e) {
+        // Ignore persistence errors silently in local preview
+      }
+    }
+
+    async function loadState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          var saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            Object.keys(appState).forEach(function(k) {
+              if (saved[k] !== undefined) appState[k] = saved[k];
+            });
+          }
+        }
+      } catch (e) {
+        // Start with default state
+      }
+    }
+
+    // ==================== SCORING & UI SYNC ====================
+    function getStationScore(num) {
+      if (num === 1) {
+        return appState.s1Results.filter(function(r) { return r && r.correct; }).length;
+      }
+      if (num === 2) {
+        var s2a = S2A_ITEMS.filter(function(it) { return appState.s2aAnswers[it.id] === it.cat; }).length;
+        var s2b = S2B_PUZZLES.filter(function(p) { return appState.s2bSolved[p.id]; }).length;
+        return s2a + s2b;
+      }
+      if (num === 3) {
+        var s3a = S3A_DEVICES.filter(function(d) { return appState.s3aAssigned[d.id] === d.group; }).length;
+        return s3a + appState.s3bStep;
+      }
+      if (num === 4) {
+        var s4a = S4A_NAMES.filter(function(n) { return appState.s4aAnswers[n.id] === n.valid; }).length;
+        var s4b = S4B_PAIRS.filter(function(p) { return appState.s4bMatched[p.id]; }).length;
+        return s4a + s4b;
+      }
+      if (num === 5) {
+        var c5 = 0;
+        Object.keys(appState.s5Answers).forEach(function(k) {
+          if (appState.s5Answers[k] && appState.s5Answers[k].correct) c5 += 1;
+        });
+        return c5;
+      }
+      return 0;
+    }
+
+    function updateProgressUI() {
+      var scores = [
+        getStationScore(1),
+        getStationScore(2),
+        getStationScore(3),
+        getStationScore(4),
+        getStationScore(5)
+      ];
+      var total = scores[0] + scores[1] + scores[2] + scores[3] + scores[4];
+      var medalsCount = 0;
+
+      for (var i = 1; i <= 5; i++) {
+        var sc = scores[i - 1];
+        var tabBadge = document.getElementById(`tab-score-` + i);
+        if (tabBadge) tabBadge.textContent = sc + `/10`;
+
+        var medalPts = document.getElementById(`medal-pts-` + i);
+        if (medalPts) medalPts.textContent = sc + ` / 10`;
+
+        var pill = document.getElementById(`medal-pill-` + i);
+        var dot = document.getElementById(`medal-dot-` + i);
+        if (pill && dot) {
+          pill.classList.remove(`earned`, `earned-gold`);
+          if (sc >= 9) {
+            pill.classList.add(`earned-gold`);
+            dot.textContent = `★`;
+            medalsCount += 1;
+          } else if (sc >= 6) {
+            pill.classList.add(`earned`);
+            dot.textContent = `✓`;
+            medalsCount += 1;
+          } else {
+            dot.textContent = String(i);
+          }
+        }
+      }
+
+      var heroTotal = document.getElementById(`hero-total-score`);
+      if (heroTotal) heroTotal.textContent = total + ` / 50 балів`;
+
+      var heroMedals = document.getElementById(`hero-medals-count`);
+      if (heroMedals) heroMedals.textContent = medalsCount + ` / 5 медалей`;
+
+      var pct = Math.round((total / 50) * 100);
+      var pctPill = document.getElementById(`progress-percent-pill`);
+      if (pctPill) pctPill.textContent = pct + `% пройдено`;
+
+      var bar = document.getElementById(`main-progress-bar`);
+      if (bar) bar.setAttribute(`aria-valuenow`, String(total));
+
+      var fill = document.getElementById(`main-progress-fill`);
+      if (fill) fill.style.width = pct + `%`;
+
+      var statusText = document.getElementById(`progress-status-text`);
+      if (statusText) {
+        if (total === 0) {
+          statusText.textContent = `Обери станцію нижче та зароби від 6 балів на кожній для отримання медалі!`;
+        } else if (medalsCount < 5) {
+          statusText.textContent = `Чудовий поступ! Набрано ${total} балів. Залишилося відкрити медалей: ${5 - medalsCount}.`;
+        } else {
+          statusText.textContent = `Усі 5 медалей зібрано! Зазирни у вкладку «Диплом знавця»!`;
+        }
+      }
+
+      renderDiplomaView(scores, total, medalsCount);
+    }
+
+    function renderDiplomaView(scores, total, medalsCount) {
+      var nameDisplay = document.getElementById(`diploma-display-name`);
+      if (nameDisplay) {
+        nameDisplay.textContent = appState.studentName.trim() ? appState.studentName.trim() : `Юний дослідник / Юна дослідниця`;
+      }
+      var sub = document.getElementById(`diploma-display-subtitle`);
+      if (sub) {
+        var cls = appState.studentClass.trim() ? appState.studentClass.trim() : `3 клас`;
+        sub.textContent = `Учень / учениця (${cls}) • Підсумковий квест «Інформатичний калейдоскоп»`;
+      }
+      var scPill = document.getElementById(`diploma-score-pill`);
+      if (scPill) scPill.textContent = `Результат: ${total} / 50 балів`;
+      var mdPill = document.getElementById(`diploma-medal-pill`);
+      if (mdPill) mdPill.textContent = `Зібрано медалей: ${medalsCount} / 5`;
+
+      var rankBadge = document.getElementById(`diploma-rank-badge`);
+      if (rankBadge) {
+        if (total >= 45) rankBadge.textContent = `Звання: Гросмейстер інформатики`;
+        else if (total >= 30) rankBadge.textContent = `Звання: Майстер цифр і кодів`;
+        else if (total >= 15) rankBadge.textContent = `Звання: Наполегливий дослідник`;
+        else rankBadge.textContent = `Статус: Початок подорожі`;
+      }
+
+      var medalNames = [`Безпека`, `Шифри`, `Залізо`, `Файли`, `Інтернет`];
+      var listEl = document.getElementById(`diploma-medals-list`);
+      if (listEl) {
+        listEl.innerHTML = medalNames.map(function(label, idx) {
+          var s = scores[idx];
+          var unlocked = s >= 6;
+          var icon = s >= 9 ? `🏆` : (unlocked ? `🥇` : `🔒`);
+          return `<div class="diploma-medal-item ${unlocked ? `unlocked` : ``}">
+            <span style="font-size: 1.5rem;" aria-hidden="true">${icon}</span>
+            <strong style="font-size: 0.85rem;">${label}</strong>
+            <span class="kicker" style="margin: 0;">${s} / 10</span>
+          </div>`;
+        }).join(``);
+      }
+    }
+
+    // ==================== NAVIGATION & TOP CONTROLS ====================
+    function switchTab(tabId) {
+      playTone(`click`);
+      appState.currentTab = tabId;
+      var allTabs = [1, 2, 3, 4, 5, `diploma`];
+      allTabs.forEach(function(id) {
+        var btn = document.getElementById(`tab-btn-` + id);
+        var panel = document.getElementById(`panel-` + id);
+        var isCurrent = String(id) === String(tabId);
+        if (btn) btn.setAttribute(`aria-selected`, isCurrent ? `true` : `false`);
+        if (panel) {
+          if (isCurrent) panel.classList.add(`active`);
+          else panel.classList.remove(`active`);
+        }
+      });
+      saveState();
+      window.scrollTo({ top: 0, behavior: `smooth` });
+    }
+
+    function toggleSound() {
+      appState.soundEnabled = !appState.soundEnabled;
+      syncSoundButton();
+      if (appState.soundEnabled) playTone(`success`);
+      saveState();
+    }
+
+    function syncSoundButton() {
+      var lbl = document.getElementById(`sound-toggle-label`);
+      if (lbl) lbl.textContent = appState.soundEnabled ? `Звук увімкнено` : `Звук вимкнено`;
+    }
+
+    function updateStudentName(val) {
+      appState.studentName = val;
+      var i1 = document.getElementById(`student-name-input`);
+      var i2 = document.getElementById(`diploma-name-input`);
+      if (i1 && i1.value !== val) i1.value = val;
+      if (i2 && i2.value !== val) i2.value = val;
+      updateProgressUI();
+      saveState();
+    }
+
+    function updateStudentClass(val) {
+      appState.studentClass = val;
+      updateProgressUI();
+      saveState();
+    }
+
+    function handleResetProgress(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        var span = btn.querySelector(`span`);
+        if (span) span.textContent = `Натисни ще раз для скидання`;
+        setTimeout(function() {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            var sp = btn.querySelector(`span`);
+            if (sp) sp.textContent = `Почати спочатку`;
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = `false`;
+      var sp2 = btn.querySelector(`span`);
+      if (sp2) sp2.textContent = `Почати спочатку`;
+
+      appState.pcStepsDone = [false, false, false];
+      appState.s1Index = 0;
+      appState.s1Results = [];
+      appState.s2aAnswers = {};
+      appState.s2bSolved = {};
+      appState.s3aAssigned = {};
+      appState.s3bStep = 0;
+      appState.s3bFirstKeyA = false;
+      appState.s3bFirstKeyO = false;
+      appState.s4aAnswers = {};
+      appState.s4bMatched = {};
+      appState.s5Index = 0;
+      appState.s5Answers = {};
+
+      renderAllStations();
+      updateProgressUI();
+      saveState();
+      playTone(`click`);
+    }
+
+    // ==================== STATION 1 LOGIC ====================
+    function runPcStep(step) {
+      var expected = appState.pcStepsDone[0] ? (appState.pcStepsDone[1] ? 3 : 2) : 1;
+      var sim = document.getElementById(`pc-screen-sim`);
+      var txt = document.getElementById(`pc-sim-text`);
+      if (step === expected) {
+        appState.pcStepsDone[step - 1] = true;
+        playTone(step === 3 ? `medal` : `success`);
+        syncPcSimUI();
+        saveState();
+      } else if (!appState.pcStepsDone[step - 1]) {
+        playTone(`error`);
+        if (txt) txt.textContent = `Ой! Спочатку виконай крок ${expected} за алгоритмом.`;
+        if (sim) sim.classList.remove(`ready`);
+      }
+    }
+
+    function syncPcSimUI() {
+      var b1 = document.getElementById(`pc-step-1`);
+      var b2 = document.getElementById(`pc-step-2`);
+      var b3 = document.getElementById(`pc-step-3`);
+      if (b1) b1.className = appState.pcStepsDone[0] ? `btn btn-positive` : `btn btn-soft`;
+      if (b2) b2.className = appState.pcStepsDone[1] ? `btn btn-positive` : `btn btn-soft`;
+      if (b3) b3.className = appState.pcStepsDone[2] ? `btn btn-positive` : `btn btn-soft`;
+
+      var sim = document.getElementById(`pc-screen-sim`);
+      var txt = document.getElementById(`pc-sim-text`);
+      if (!sim || !txt) return;
+      if (appState.pcStepsDone[2]) {
+        sim.classList.add(`ready`);
+        txt.textContent = `Робочий стіл завантажено! Можна працювати (не більше 15 хв).`;
+      } else if (appState.pcStepsDone[1]) {
+        sim.classList.remove(`ready`);
+        txt.textContent = `Системний блок увімкнено! Тепер виконай крок 3.`;
+      } else if (appState.pcStepsDone[0]) {
+        sim.classList.remove(`ready`);
+        txt.textContent = `Монітор горить! Тепер натисни кнопку Power (крок 2).`;
+      } else {
+        sim.classList.remove(`ready`);
+        txt.textContent = `Комп'ютер вимкнено. Почни з кроку 1!`;
+      }
+    }
+
+    function startEyeExercise() {
+      if (eyeTimerInterval) {
+        clearInterval(eyeTimerInterval);
+        eyeTimerInterval = null;
+      }
+      var phaseEl = document.getElementById(`eye-phase-label`);
+      var countEl = document.getElementById(`eye-counter-val`);
+      var btn = document.getElementById(`eye-timer-btn`);
+      if (btn) btn.disabled = true;
+
+      var phase = 1;
+      var tick = 1;
+      if (phaseEl) phaseEl.textContent = `Фаза 1: Заплющ очі!`;
+      if (countEl) countEl.textContent = `1 / 4`;
+      playTone(`click`);
+
+      eyeTimerInterval = setInterval(function() {
+        tick += 1;
+        if (phase === 1) {
+          if (tick <= 4) {
+            if (countEl) countEl.textContent = tick + ` / 4`;
+          } else {
+            phase = 2;
+            tick = 1;
+            playTone(`success`);
+            if (phaseEl) phaseEl.textContent = `Фаза 2: Розплющ очі та подивись удалину!`;
+            if (countEl) countEl.textContent = `1 / 6`;
+          }
+        } else {
+          if (tick <= 6) {
+            if (countEl) countEl.textContent = tick + ` / 6`;
+          } else {
+            clearInterval(eyeTimerInterval);
+            eyeTimerInterval = null;
+            playTone(`medal`);
+            if (phaseEl) phaseEl.textContent = `Чудово! Повтори так 4–5 разів.`;
+            if (countEl) countEl.textContent = `Очі відпочили!`;
+            if (btn) btn.disabled = false;
+          }
+        }
+      }, 750);
+    }
+
+    function renderStation1Game() {
+      var idx = appState.s1Index;
+      var badge = document.getElementById(`s1-progress-badge`);
+      var qText = document.getElementById(`s1-question-text`);
+      var btnPair = document.getElementById(`s1-btn-pair`);
+      var safeList = document.getElementById(`s1-safe-list`);
+      var unsafeList = document.getElementById(`s1-unsafe-list`);
+
+      if (safeList) safeList.innerHTML = ``;
+      if (unsafeList) unsafeList.innerHTML = ``;
+
+      appState.s1Results.forEach(function(res) {
+        if (!res) return;
+        var li = document.createElement(`li`);
+        li.className = `log-item`;
+        li.textContent = (res.correct ? `✓ ` : `✕ `) + res.text;
+        if (res.chosenSafe && safeList) safeList.appendChild(li);
+        else if (!res.chosenSafe && unsafeList) unsafeList.appendChild(li);
+      });
+
+      if (idx >= S1_SITUATIONS.length) {
+        var score1 = getStationScore(1);
+        if (badge) badge.textContent = `Завершено: ${score1} / 10`;
+        if (qText) qText.textContent = score1 >= 6
+          ? `Усі ситуації розсортовано! Ти набрав ${score1} з 10 балів і відкрив Медаль Безпеки!`
+          : `Сортування завершено (${score1} з 10 балів). Спробуй ще раз, щоб набрати 6+ балів для медалі!`;
+        if (btnPair) btnPair.style.display = `none`;
+      } else {
+        if (badge) badge.textContent = `Ситуація ${idx + 1} з ${S1_SITUATIONS.length}`;
+        if (qText) qText.textContent = S1_SITUATIONS[idx].text;
+        if (btnPair) btnPair.style.display = `flex`;
+      }
+    }
+
+    function answerSafety(chosenSafe) {
+      var idx = appState.s1Index;
+      if (idx >= S1_SITUATIONS.length) return;
+      var item = S1_SITUATIONS[idx];
+      var isCorrect = item.safe === chosenSafe;
+      appState.s1Results.push({
+        text: item.text,
+        chosenSafe: chosenSafe,
+        correct: isCorrect
+      });
+      appState.s1Index += 1;
+
+      var fb = document.getElementById(`s1-feedback`);
+      if (fb) {
+        fb.className = `feedback-box ` + (isCorrect ? `feedback-ok` : `feedback-err`);
+        fb.innerHTML = `<span>${isCorrect ? `Молодець! ` : `Увага! `}${item.note}</span>`;
+      }
+
+      if (appState.s1Index === S1_SITUATIONS.length && getStationScore(1) >= 6) {
+        playTone(`medal`);
+      } else {
+        playTone(isCorrect ? `success` : `error`);
+      }
+
+      renderStation1Game();
+      updateProgressUI();
+      saveState();
+    }
+
+    function resetStation1Game() {
+      appState.s1Index = 0;
+      appState.s1Results = [];
+      var fb = document.getElementById(`s1-feedback`);
+      if (fb) {
+        fb.className = `feedback-box feedback-neutral`;
+        fb.innerHTML = `<span>Обери, чи безпечна ця дія у комп'ютерному класі або під час роботи з інструментами.</span>`;
+      }
+      renderStation1Game();
+      updateProgressUI();
+      saveState();
+      playTone(`click`);
+    }
+
+    // ==================== STATION 2 LOGIC ====================
+    function renderBrailleHtml(dots) {
+      var cells = [1, 4, 2, 5, 3, 6]; // 2 columns x 3 rows grid order
+      var html = `<span class="braille-cell" aria-label="Символ Брайля">`;
+      cells.forEach(function(dotNum) {
+        var isOn = dots[dotNum - 1] === 1;
+        html += `<span class="braille-dot ${isOn ? `on` : ``}"></span>`;
+      });
+      html += `</span>`;
+      return html;
+    }
+
+    function previewCode(letter) {
+      var data = CODE_SAMPLES[letter];
+      if (!data) return;
+      var m = document.getElementById(`lab-morse`);
+      var b = document.getElementById(`lab-braille`);
+      var f = document.getElementById(`lab-flag`);
+      if (m) m.textContent = data.morse;
+      if (b) b.innerHTML = renderBrailleHtml(data.braille);
+      if (f) f.textContent = data.flag;
+      playMorseSequence(data.morse);
+    }
+
+    function renderStation2A() {
+      var grid = document.getElementById(`s2a-grid`);
+      if (!grid) return;
+      var solvedCount = 0;
+      grid.innerHTML = S2A_ITEMS.map(function(it) {
+        var chosen = appState.s2aAnswers[it.id];
+        var isOk = chosen === it.cat;
+        if (isOk) solvedCount += 1;
+        var btns = it.opts.map(function(o) {
+          var cls = `chip`;
+          if (chosen === o.k) {
+            cls += isOk ? ` selected` : ``;
+          }
+          return `<button type="button" class="${cls}" onclick="chooseS2A('${it.id}', '${o.k}')">${o.l}</button>`;
+        }).join(``);
+        var msg = ``;
+        if (chosen) {
+          msg = isOk
+            ? `<div class="feedback-box feedback-ok"><span>✓ Правильно!</span></div>`
+            : `<div class="feedback-box feedback-err"><span>✕ Спробуй інший тип!</span></div>`;
+        }
+        return `<div class="decode-card">
+          <strong>${it.text}</strong>
+          <div class="code-chips">${btns}</div>
+          ${msg}
+        </div>`;
+      }).join(``);
+
+      var badge = document.getElementById(`s2a-score-badge`);
+      if (badge) badge.textContent = solvedCount + ` / 6 балів`;
+    }
+
+    function chooseS2A(itemId, catKey) {
+      appState.s2aAnswers[itemId] = catKey;
+      var item = S2A_ITEMS.find(function(x) { return x.id === itemId; });
+      var ok = item && item.cat === catKey;
+      playTone(ok ? `success` : `error`);
+      renderStation2A();
+      updateProgressUI();
+      saveState();
+    }
+
+    function renderStation2B() {
+      var grid = document.getElementById(`s2b-grid`);
+      if (!grid) return;
+      var solvedCount = 0;
+
+      grid.innerHTML = S2B_PUZZLES.map(function(p) {
+        var isSolved = !!appState.s2bSolved[p.id];
+        if (isSolved) solvedCount += 1;
+
+        var visualPrompt = `<strong style="font-size: 1.15rem; color: var(--primary);">${p.prompt}</strong>`;
+        if (p.type === `braille`) {
+          visualPrompt = `<div style="display: flex; gap: var(--space-sm); align-items: center;">
+            ${renderBrailleHtml([1, 1, 0, 1, 0, 0])}
+            ${renderBrailleHtml([0, 1, 1, 0, 0, 0])}
+            ${renderBrailleHtml([1, 1, 0, 0, 1, 0])}
+          </div>`;
+        } else if (p.type === `morse`) {
+          visualPrompt = `<div>
+            <strong style="font-size: 1.15rem; color: var(--primary); display: block; margin-bottom: var(--space-xs);">${p.prompt}</strong>
+            <button type="button" class="btn btn-soft" onclick="playMorseSequence('••• •—•• ——— •—— ———')">
+              <i data-lucide="volume-2" aria-hidden="true"></i>
+              <span>Прослухати Морзе</span>
+            </button>
+          </div>`;
+        }
+
+        var statusHtml = isSolved
+          ? `<div class="feedback-box feedback-ok"><span>✓ Розшифровано: ${p.answer}!</span></div>`
+          : `<div class="feedback-box feedback-neutral" id="fb-${p.id}"><span>Введи слово великими або малими літерами.</span></div>`;
+
+        return `<div class="decode-card">
+          <div>
+            <strong style="font-size: 1.05rem;">${p.title}</strong>
+            <p style="font-size: 0.88rem; color: var(--on-surface-variant); margin-top: 4px;">${p.clue}</p>
+          </div>
+          <div>${visualPrompt}</div>
+          <div class="form-row">
+            <div class="field-group" style="flex: 1 1 150px;">
+              <label class="field-label" for="input-${p.id}">Розшифроване слово</label>
+              <input type="text" id="input-${p.id}" class="input-pill" value="${isSolved ? p.answer : ``}" ${isSolved ? `disabled` : ``}>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="checkS2B('${p.id}')" ${isSolved ? `disabled` : ``}>Перевірити</button>
+          </div>
+          ${statusHtml}
+        </div>`;
+      }).join(``);
+
+      var badge = document.getElementById(`s2b-score-badge`);
+      if (badge) badge.textContent = solvedCount + ` / 4 бали`;
+      refreshIcons();
+    }
+
+    function checkS2B(puzzleId) {
+      var p = S2B_PUZZLES.find(function(x) { return x.id === puzzleId; });
+      var input = document.getElementById(`input-` + puzzleId);
+      if (!p || !input) return;
+      var val = input.value.trim().toUpperCase();
+      if (val === p.answer) {
+        appState.s2bSolved[puzzleId] = true;
+        playTone(getStationScore(2) + 1 >= 6 ? `medal` : `success`);
+        renderStation2B();
+        updateProgressUI();
+        saveState();
+      } else {
+        playTone(`error`);
+        var fb = document.getElementById(`fb-` + puzzleId);
+        if (fb) {
+          fb.className = `feedback-box feedback-err`;
+          fb.innerHTML = `<span>✕ Поки не точно! Перевір літери за ключем-підказкою.</span>`;
+        }
+      }
+    }
+
+    // ==================== STATION 3 LOGIC ====================
+    function renderStation3A() {
+      var grid = document.getElementById(`s3a-devices`);
+      if (!grid) return;
+
+      var counts = { input: 0, output: 0, memory: 0 };
+      var score = 0;
+
+      grid.innerHTML = S3A_DEVICES.map(function(d) {
+        var assigned = appState.s3aAssigned[d.id];
+        var isDone = assigned === d.group;
+        if (isDone) {
+          counts[d.group] += 1;
+          score += 1;
+        }
+        var cls = `device-btn`;
+        if (isDone) cls += ` done-ok`;
+        else if (selectedDeviceId === d.id) cls += ` active-pick`;
+
+        var tagText = isDone ? `✓` : (selectedDeviceId === d.id ? `Обрано` : ``);
+        return `<button type="button" class="${cls}" onclick="pickDevice('${d.id}')" ${isDone ? `disabled` : ``}>
+          <span style="display: inline-flex; align-items: center; gap: 8px;">
+            <i data-lucide="${d.icon}" aria-hidden="true"></i>
+            <span>${d.name}</span>
+          </span>
+          <span>${tagText}</span>
+        </button>`;
+      }).join(``);
+
+      var bIn = document.getElementById(`bucket-count-input`);
+      var bOut = document.getElementById(`bucket-count-output`);
+      var bMem = document.getElementById(`bucket-count-memory`);
+      if (bIn) bIn.textContent = counts.input + ` пристроїв`;
+      if (bOut) bOut.textContent = counts.output + ` пристроїв`;
+      if (bMem) bMem.textContent = counts.memory + ` пристроїв`;
+
+      var badge = document.getElementById(`s3a-score-badge`);
+      if (badge) badge.textContent = score + ` / 8 пристроїв`;
+      refreshIcons();
+    }
+
+    function pickDevice(id) {
+      selectedDeviceId = id;
+      playTone(`click`);
+      var dev = S3A_DEVICES.find(function(x) { return x.id === id; });
+      var fb = document.getElementById(`s3a-feedback`);
+      if (fb && dev) {
+        fb.className = `feedback-box feedback-neutral`;
+        fb.innerHTML = `<span>Обрано: <strong>${dev.name}</strong>. Тепер натисни групу нижче!</span>`;
+      }
+      renderStation3A();
+    }
+
+    function assignDeviceToGroup(groupKey) {
+      var fb = document.getElementById(`s3a-feedback`);
+      if (!selectedDeviceId) {
+        playTone(`error`);
+        if (fb) {
+          fb.className = `feedback-box feedback-err`;
+          fb.innerHTML = `<span>Спочатку натисни на пристрій у списку вище!</span>`;
+        }
+        return;
+      }
+      var dev = S3A_DEVICES.find(function(x) { return x.id === selectedDeviceId; });
+      if (!dev) return;
+
+      if (dev.group === groupKey) {
+        appState.s3aAssigned[dev.id] = groupKey;
+        selectedDeviceId = null;
+        playTone(`success`);
+        if (fb) {
+          fb.className = `feedback-box feedback-ok`;
+          fb.innerHTML = `<span>✓ Чудово! «${dev.name}» правильно розподілено.</span>`;
+        }
+      } else {
+        playTone(`error`);
+        if (fb) {
+          fb.className = `feedback-box feedback-err`;
+          fb.innerHTML = `<span>✕ Подумай іще! Для чого слугує «${dev.name}»: вводить дані, виводить чи зберігає?</span>`;
+        }
+      }
+      renderStation3A();
+      updateProgressUI();
+      saveState();
+    }
+
+    function resetStation3Devices() {
+      appState.s3aAssigned = {};
+      selectedDeviceId = null;
+      var fb = document.getElementById(`s3a-feedback`);
+      if (fb) {
+        fb.className = `feedback-box feedback-neutral`;
+        fb.innerHTML = `<span>Обери пристрій зі списку, а потім натисни потрібну групу.</span>`;
+      }
+      renderStation3A();
+      updateProgressUI();
+      saveState();
+      playTone(`click`);
+    }
+
+    function renderStation3B() {
+      var badge = document.getElementById(`s3b-score-badge`);
+      var promptBox = document.getElementById(`s3b-prompt`);
+      var promptText = document.getElementById(`s3b-prompt-text`);
+      if (badge) badge.textContent = appState.s3bStep + ` / 2 завдання`;
+      if (!promptBox || !promptText) return;
+
+      if (appState.s3bStep === 0) {
+        promptBox.className = `feedback-box feedback-neutral`;
+        var progressAO = (appState.s3bFirstKeyA ? ` [А ✓]` : ``) + (appState.s3bFirstKeyO ? ` [О ✓]` : ``);
+        promptText.textContent = `Завдання 1: Натисни клавіші основної позиції для вказівних пальців лівої та правої руки (А та О).` + progressAO;
+      } else if (appState.s3bStep === 1) {
+        promptBox.className = `feedback-box feedback-neutral`;
+        promptText.textContent = `Завдання 2: Натисни спеціальну клавішу, яка завершує введення команди або створює новий абзац (Enter).`;
+      } else {
+        promptBox.className = `feedback-box feedback-ok`;
+        promptText.textContent = `✓ Усі клавіатурні завдання виконано! Ти пам'ятаєш основну позицію «ФІВА ОЛДЖ»!`;
+      }
+    }
+
+    function pressVirtualKey(keyLabel) {
+      if (appState.s3bStep === 0) {
+        if (keyLabel === `А`) {
+          appState.s3bFirstKeyA = true;
+          playTone(`click`);
+        } else if (keyLabel === `О`) {
+          appState.s3bFirstKeyO = true;
+          playTone(`click`);
+        } else {
+          playTone(`error`);
+        }
+        if (appState.s3bFirstKeyA && appState.s3bFirstKeyO) {
+          appState.s3bStep = 1;
+          playTone(`success`);
+        }
+      } else if (appState.s3bStep === 1) {
+        if (keyLabel === `Enter`) {
+          appState.s3bStep = 2;
+          playTone(getStationScore(3) + 1 >= 6 ? `medal` : `success`);
+        } else {
+          playTone(`error`);
+        }
+      } else {
+        playTone(`click`);
+      }
+      renderStation3B();
+      updateProgressUI();
+      saveState();
+    }
+
+    // ==================== STATION 4 LOGIC ====================
+    function toggleFolderBranch(branchId) {
+      var el = document.getElementById(branchId);
+      if (el) el.classList.toggle(`hidden`);
+      playTone(`click`);
+    }
+
+    function renderStation4A() {
+      var grid = document.getElementById(`s4a-grid`);
+      if (!grid) return;
+      var score = 0;
+
+      grid.innerHTML = S4A_NAMES.map(function(item) {
+        var ans = appState.s4aAnswers[item.id];
+        var answered = ans !== undefined;
+        var isOk = answered && ans === item.valid;
+        if (isOk) score += 1;
+
+        var fbHtml = ``;
+        if (answered) {
+          fbHtml = `<div class="feedback-box ${isOk ? `feedback-ok` : `feedback-err`}">
+            <span>${isOk ? `✓ ` : `✕ `}${item.reason}</span>
+          </div>`;
+        }
+
+        return `<div class="decode-card">
+          <div style="font-size: 1.1rem; font-weight: 900; color: var(--secondary);">${item.name}</div>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm);">
+            <button type="button" class="chip ${ans === true ? `selected` : ``}" onclick="answerFilename('${item.id}', true)">Можна так назвати</button>
+            <button type="button" class="chip ${ans === false ? `selected` : ``}" onclick="answerFilename('${item.id}', false)">Є помилка</button>
+          </div>
+          ${fbHtml}
+        </div>`;
+      }).join(``);
+
+      var badge = document.getElementById(`s4a-score-badge`);
+      if (badge) badge.textContent = score + ` / 6 балів`;
+    }
+
+    function answerFilename(id, chosenValid) {
+      appState.s4aAnswers[id] = chosenValid;
+      var item = S4A_NAMES.find(function(x) { return x.id === id; });
+      var ok = item && item.valid === chosenValid;
+      playTone(ok ? `success` : `error`);
+      renderStation4A();
+      updateProgressUI();
+      saveState();
+    }
+
+    function renderStation4B() {
+      var leftCol = document.getElementById(`s4b-left-col`);
+      var rightCol = document.getElementById(`s4b-right-col`);
+      if (!leftCol || !rightCol) return;
+
+      var matchedCount = 0;
+      leftCol.innerHTML = S4B_PAIRS.map(function(p) {
+        var done = !!appState.s4bMatched[p.id];
+        if (done) matchedCount += 1;
+        var cls = `match-btn`;
+        if (done) cls += ` matched`;
+        else if (selectedMatchLeft === p.id) cls += ` active-left`;
+        return `<button type="button" class="${cls}" onclick="pickMatchLeft('${p.id}')" ${done ? `disabled` : ``}>
+          <span>${p.left}</span>
+          <span>${done ? `✓` : (selectedMatchLeft === p.id ? `Обрано` : `→`)}</span>
+        </button>`;
+      }).join(``);
+
+      rightCol.innerHTML = S4B_RIGHT_ORDER.map(function(rid) {
+        var pair = S4B_PAIRS.find(function(p) { return p.rightId === rid; });
+        var done = pair && !!appState.s4bMatched[pair.id];
+        var cls = `match-btn` + (done ? ` matched` : ``);
+        return `<button type="button" class="${cls}" onclick="pickMatchRight('${rid}')" ${done ? `disabled` : ``}>
+          <span>${pair ? pair.rightText : ``}</span>
+          <span>${done ? `✓` : ``}</span>
+        </button>`;
+      }).join(``);
+
+      var badge = document.getElementById(`s4b-score-badge`);
+      if (badge) badge.textContent = matchedCount + ` / 4 пари`;
+    }
+
+    function pickMatchLeft(leftId) {
+      selectedMatchLeft = leftId;
+      playTone(`click`);
+      var pair = S4B_PAIRS.find(function(p) { return p.id === leftId; });
+      var fb = document.getElementById(`s4b-feedback`);
+      if (fb && pair) {
+        fb.className = `feedback-box feedback-neutral`;
+        fb.innerHTML = `<span>Обрано «${pair.left}». Тепер обери відповідний опис праворуч!</span>`;
+      }
+      renderStation4B();
+    }
+
+    function pickMatchRight(rightId) {
+      var fb = document.getElementById(`s4b-feedback`);
+      if (!selectedMatchLeft) {
+        playTone(`error`);
+        if (fb) {
+          fb.className = `feedback-box feedback-err`;
+          fb.innerHTML = `<span>Спочатку натисни елемент у лівій колонці!</span>`;
+        }
+        return;
+      }
+      var pair = S4B_PAIRS.find(function(p) { return p.id === selectedMatchLeft; });
+      if (pair && pair.rightId === rightId) {
+        appState.s4bMatched[pair.id] = true;
+        selectedMatchLeft = null;
+        playTone(getStationScore(4) >= 6 ? `medal` : `success`);
+        if (fb) {
+          fb.className = `feedback-box feedback-ok`;
+          fb.innerHTML = `<span>✓ Пара збіглася: «${pair.left}» — це ${pair.rightText.toLowerCase()}!</span>`;
+        }
+      } else {
+        playTone(`error`);
+        if (fb) {
+          fb.className = `feedback-box feedback-err`;
+          fb.innerHTML = `<span>✕ Не та пара! Перевір розширення після крапки.</span>`;
+        }
+      }
+      renderStation4B();
+      updateProgressUI();
+      saveState();
+    }
+
+    function resetStation4Match() {
+      appState.s4bMatched = {};
+      selectedMatchLeft = null;
+      var fb = document.getElementById(`s4b-feedback`);
+      if (fb) {
+        fb.className = `feedback-box feedback-neutral`;
+        fb.innerHTML = `<span>Спочатку обери файл ліворуч, а потім відповідний тип праворуч!</span>`;
+      }
+      renderStation4B();
+      updateProgressUI();
+      saveState();
+      playTone(`click`);
+    }
+
+    // ==================== STATION 5 LOGIC ====================
+    function explainBrowser(part) {
+      playTone(`click`);
+      var box = document.getElementById(`browser-explain-box`);
+      if (!box) return;
+      var messages = {
+        nav: `Кнопки переходу між сторінками: допомагають повернутися назад, уперед або оновити вебсторінку.`,
+        tab: `Вкладка: дозволяє тримати відкритими одразу кілька вебсторінок в одному вікні браузера.`,
+        addr: `Адресний рядок: сюди вводять адресу вебсайту (наприклад, pustunchik.ua).`,
+        star: `Панель закладок: дозволяє зберегти улюблену сторінку, щоб швидко повернутися до неї.`,
+        link: `Гіперпосилання: перехід на іншу сторінку або відкриття відео/тексту. На ньому курсор має вигляд руки!`
+      };
+      box.className = `feedback-box feedback-ok`;
+      box.innerHTML = `<span>${messages[part] || ``}</span>`;
+    }
+
+    function renderStation5Quiz() {
+      var idx = appState.s5Index;
+      var badge = document.getElementById(`s5-progress-badge`);
+      var qText = document.getElementById(`s5-question-text`);
+      var optsList = document.getElementById(`s5-options-list`);
+      var fb = document.getElementById(`s5-feedback`);
+      var nextBtn = document.getElementById(`s5-next-btn`);
+
+      if (!qText || !optsList || !fb || !nextBtn) return;
+
+      if (idx >= S5_QUESTIONS.length) {
+        var score5 = getStationScore(5);
+        if (badge) badge.textContent = `Завершено: ${score5} / 10`;
+        qText.textContent = `Кібер-квест завершено! Твій результат: ${score5} з 10 балів.`;
+        optsList.innerHTML = ``;
+        fb.className = score5 >= 6 ? `feedback-box feedback-ok` : `feedback-box feedback-neutral`;
+        fb.innerHTML = `<span>${score5 >= 6 ? `Вітаємо! Медаль Кіберзахисника відкрита! Переходь до Диплома знавця.` : `Спробуй пройти тест ще раз, щоб відкрити Медаль Кіберзахисника (потрібно від 6 балів).`}</span>`;
+        nextBtn.disabled = true;
+        return;
+      }
+
+      var q = S5_QUESTIONS[idx];
+      var savedAns = appState.s5Answers[idx];
+      if (badge) badge.textContent = `Питання ${idx + 1} з ${S5_QUESTIONS.length}`;
+      qText.textContent = q.q;
+
+      optsList.innerHTML = q.opts.map(function(optText, oIdx) {
+        var cls = `quiz-opt-btn`;
+        if (savedAns) {
+          if (oIdx === q.correct) cls += ` opt-correct`;
+          else if (oIdx === savedAns.chosenIndex && !savedAns.correct) cls += ` opt-wrong`;
+        }
+        return `<button type="button" class="${cls}" onclick="answerStation5(${oIdx})" ${savedAns ? `disabled` : ``}>
+          <span>${optText}</span>
+        </button>`;
+      }).join(``);
+
+      if (savedAns) {
+        fb.className = `feedback-box ` + (savedAns.correct ? `feedback-ok` : `feedback-err`);
+        fb.innerHTML = `<span>${savedAns.correct ? `✓ Молодець! ` : `✕ Запам'ятай: `}${q.explain}</span>`;
+        nextBtn.disabled = false;
+      } else {
+        fb.className = `feedback-box feedback-neutral`;
+        fb.innerHTML = `<span>Обери правильний варіант відповіді.</span>`;
+        nextBtn.disabled = true;
+      }
+    }
+
+    function answerStation5(oIdx) {
+      var idx = appState.s5Index;
+      var q = S5_QUESTIONS[idx];
+      if (!q || appState.s5Answers[idx]) return;
+      var isOk = oIdx === q.correct;
+      appState.s5Answers[idx] = { chosenIndex: oIdx, correct: isOk };
+      playTone(isOk ? `success` : `error`);
+      renderStation5Quiz();
+      updateProgressUI();
+      saveState();
+    }
+
+    function nextStation5Question() {
+      if (appState.s5Index < S5_QUESTIONS.length) {
+        appState.s5Index += 1;
+        if (appState.s5Index === S5_QUESTIONS.length && getStationScore(5) >= 6) {
+          playTone(`medal`);
+        } else {
+          playTone(`click`);
+        }
+        renderStation5Quiz();
+        saveState();
+      }
+    }
+
+    function resetStation5Quiz() {
+      appState.s5Index = 0;
+      appState.s5Answers = {};
+      renderStation5Quiz();
+      updateProgressUI();
+      saveState();
+      playTone(`click`);
+    }
+
+    // ==================== DIPLOMA PNG EXPORT ====================
+    function downloadDiplomaPng() {
+      var canvas = document.createElement(`canvas`);
+      canvas.width = 1200;
+      canvas.height = 820;
+      var ctx = canvas.getContext(`2d`);
+      if (!ctx) return;
+
+      var cs = getComputedStyle(document.documentElement);
+      var bg = cs.getPropertyValue(`--background`).trim();
+      var cardBg = cs.getPropertyValue(`--surface-container-low`).trim();
+      var pink = cs.getPropertyValue(`--primary`).trim();
+      var pinkSoft = cs.getPropertyValue(`--primary-soft`).trim();
+      var pinkCont = cs.getPropertyValue(`--primary-container`).trim();
+      var grape = cs.getPropertyValue(`--secondary`).trim();
+      var ink = cs.getPropertyValue(`--on-surface`).trim();
+      var muted = cs.getPropertyValue(`--on-surface-variant`).trim();
+
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, 1200, 820);
+
+      ctx.fillStyle = cardBg;
+      ctx.strokeStyle = pinkCont;
+      ctx.lineWidth = 16;
+      ctx.fillRect(48, 48, 1104, 724);
+      ctx.strokeRect(48, 48, 1104, 724);
+
+      ctx.strokeStyle = grape;
+      ctx.lineWidth = 4;
+      ctx.setLineDash([14, 10]);
+      ctx.strokeRect(80, 80, 1040, 660);
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = pinkSoft;
+      ctx.beginPath();
+      ctx.arc(600, 165, 48, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = pink;
+      ctx.font = `900 48px Nunito, sans-serif`;
+      ctx.textAlign = `center`;
+      ctx.fillText(`★`, 600, 182);
+
+      ctx.fillStyle = muted;
+      ctx.font = `700 20px Nunito, sans-serif`;
+      ctx.fillText(`ІНФОРМАТИЧНИЙ КАЛЕЙДОСКОП • І СЕМЕСТР`, 600, 255);
+
+      ctx.fillStyle = ink;
+      ctx.font = `900 54px Nunito, sans-serif`;
+      ctx.fillText(`ДИПЛОМ ЗНАВЦЯ ІНФОРМАТИКИ`, 600, 325);
+
+      var student = appState.studentName.trim() ? appState.studentName.trim() : `Юний дослідник / Юна дослідниця`;
+      ctx.fillStyle = pink;
+      ctx.font = `900 44px Nunito, sans-serif`;
+      ctx.fillText(student, 600, 415);
+
+      ctx.strokeStyle = pinkCont;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(280, 435);
+      ctx.lineTo(920, 435);
+      ctx.stroke();
+
+      var cls = appState.studentClass.trim() ? appState.studentClass.trim() : `3 клас`;
+      ctx.fillStyle = muted;
+      ctx.font = `700 26px Nunito, sans-serif`;
+      ctx.fillText(`Учень / учениця (${cls})`, 600, 485);
+
+      var scores = [1, 2, 3, 4, 5].map(getStationScore);
+      var total = scores[0] + scores[1] + scores[2] + scores[3] + scores[4];
+      var medals = scores.filter(function(s) { return s >= 6; }).length;
+
+      ctx.fillStyle = grape;
+      ctx.font = `800 32px Nunito, sans-serif`;
+      ctx.fillText(`Набрано балів: ${total} / 50   •   Зібрано медалей: ${medals} / 5`, 600, 565);
+
+      ctx.fillStyle = muted;
+      ctx.font = `600 20px Nunito, sans-serif`;
+      ctx.fillText(`За матеріалами підручника «Я досліджую світ» (3 клас, ч. 2, с. 4–46)`, 600, 675);
+
+      var dataUrl = typeof canvas.toDataURL === `function` ? canvas.toDataURL(`image/png`) : ``;
+      var base64 = (typeof dataUrl === `string` && dataUrl.indexOf(`,`) !== -1) ? dataUrl.split(`,`)[1] : ``;
+      if (base64 && window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content: base64,
+          contentType: `image/png`,
+          encoding: `base64`,
+          filename: `diplom-informatyka-3klas.png`
+        });
+      }
+      playTone(`medal`);
+    }
+
+    // ==================== BOOTSTRAP ====================
+    function refreshIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+    }
+
+    function renderAllStations() {
+      syncPcSimUI();
+      renderStation1Game();
+      previewCode(`С`);
+      renderStation2A();
+      renderStation2B();
+      renderStation3A();
+      renderStation3B();
+      renderStation4A();
+      renderStation4B();
+      renderStation5Quiz();
+    }
+
+    async function initApp() {
+      await loadState();
+
+      var i1 = document.getElementById(`student-name-input`);
+      var i2 = document.getElementById(`diploma-name-input`);
+      var i3 = document.getElementById(`diploma-class-input`);
+      if (i1) i1.value = appState.studentName || ``;
+      if (i2) i2.value = appState.studentName || ``;
+      if (i3) i3.value = appState.studentClass || `3 клас`;
+
+      syncSoundButton();
+      renderAllStations();
+      updateProgressUI();
+
+      var tabToOpen = appState.currentTab || 1;
+      var allTabs = [1, 2, 3, 4, 5, `diploma`];
+      allTabs.forEach(function(id) {
+        var btn = document.getElementById(`tab-btn-` + id);
+        var panel = document.getElementById(`panel-` + id);
+        var isCurrent = String(id) === String(tabToOpen);
+        if (btn) btn.setAttribute(`aria-selected`, isCurrent ? `true` : `false`);
+        if (panel) {
+          if (isCurrent) panel.classList.add(`active`);
+          else panel.classList.remove(`active`);
+        }
+      });
+
+      refreshIcons();
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
